@@ -31,8 +31,8 @@ Route::middleware('auth')->group(function () {
 
 
 /**** Routing for auth google ****/
-Route::get('auth/{provider}/redirect', [SocialLoginController::class , 'redirect'])->name('auth.socialite.redirect');
-Route::get('auth/{provider}/callback', [SocialLoginController::class , 'callback'])->name('auth.socialite.callback');
+Route::get('auth/google/redirect', [SocialLoginController::class , 'redirect'])->name('auth.socialite.redirect');
+Route::get('auth/google/callback', [SocialLoginController::class , 'callback'])->name('auth.socialite.callback');
 /**** End routing for auth google ****/
 
 

@@ -42,6 +42,21 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // if ($request->role == 'organisateur') {
+        //     $organisateur = Organisateur::create(['id_user' => $user->id]);
+        // } elseif ($request->role == 'visiteur') {
+        //     $visiteur = Visiteur::create([
+        //         'id_user' => $user->id,
+        //     ]);
+        // } 
+        // if ($user->role == 'visiteur') {
+        //     Auth::login($user);
+        //     return redirect('');
+        // } elseif ($user->role == 'organisateur') {
+        //     Auth::login($user);
+        //     return redirect()->route('');
+        // }
+
         event(new Registered($user));
 
         Auth::login($user);
