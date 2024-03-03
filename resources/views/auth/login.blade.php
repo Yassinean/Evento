@@ -5,8 +5,8 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="flex">
-            <button type="button"
-                class="text-red-500 hover:bg-red-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2">
+            <a href="{{ route('auth.socialite.redirect', 'goole') }}"
+                class="transition duration-700 ease-in-out text-red-500 hover:bg-red-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2">
                 <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                     viewBox="0 0 18 19">
                     <path fill-rule="evenodd"
@@ -14,9 +14,9 @@
                         clip-rule="evenodd" />
                 </svg>
                 Sign in with Google
-            </button>
-            <button type="button"
-                class="text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2">
+            </a>
+            <a href="{{ route('auth.socialite.redirect', 'facebook') }}"
+                class="transition duration-700 ease-in-out text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2">
                 <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                     viewBox="0 0 8 19">
                     <path fill-rule="evenodd"
@@ -24,7 +24,7 @@
                         clip-rule="evenodd" />
                 </svg>
                 Sign in with Facebook
-            </button>
+            </a>
         </div>
         <!-- Email Address -->
         <div>
