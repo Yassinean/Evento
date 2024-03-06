@@ -2,64 +2,76 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $events = Event::all();
+
+        return view('organizer.dashboard' , compact('events'));
+    }
+    public function create(EventRequest $request){
+        $validatedData = $request->validate($request->rules());
+
+        if($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('public/images'), $imageName);
+        } else {
+            $imageName = null;
+        }
+
+        Event::create([
+            'name' => $validatedData['name'],
+            'localisation' => $validatedData['localisation'],
+            'description' => $validatedData['description'],
+            'image' => $imageName,
+            'date'=> $validatedData['date'],
+            'capacity' => $validatedData['capacity']
+        ]);
+
+        return redirect()->back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+
+    public function update(Request $request , Event $id){
+        if($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('public/images'), $imageName);
+        } else {
+            $imageName = null;
+        }
+
+        $request->validate([
+            'eventname' => 'required',
+            'eventlocalisation' => 'required',
+            'eventdiscription' => 'required',
+            'eventimage' => $imageName,
+            'eventdate' => 'required',
+            'eventcapacity' => 'required'
+        ]);
+
+        $id->update([
+            'name' => $request->eventname,
+            'localisation' => $request->eventlocalisation,
+            'description' => $request->eventdiscription,
+            'image' => $imageName,
+            'date'=> $request->eventdate,
+            'capacity' => $request->eventcapacity
+        ]);
+
+        return redirect()->back();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function destroy($id){
+        $event = Event::findOrFail($id);
+        $event->delete();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Event $event)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Event $event)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Event $event)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Event $event)
-    {
-        //
+        return redirect()->back();
     }
 }

@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Admin;
+use App\Models\Visiteur;
+use App\Models\Organisateur;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -34,32 +37,33 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => 'required',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
+        
+          if ($request->role === 'visiteur') {
+            Visiteur::create(['user_id' => $user->id]);
+        } elseif ($request->role === 'organisateur') {
+            organisateur::create(['user_id' => $user->id]);
+        } elseif ($request->role === 'admin') {
+            Admin::create(['user_id' => $user->id]);
+        }
 
-        // if ($request->role == 'organisateur') {
-        //     $organisateur = Organisateur::create(['id_user' => $user->id]);
-        // } elseif ($request->role == 'visiteur') {
-        //     $visiteur = Visiteur::create([
-        //         'id_user' => $user->id,
-        //     ]);
-        // } 
-        // if ($user->role == 'visiteur') {
-        //     Auth::login($user);
-        //     return redirect('');
-        // } elseif ($user->role == 'organisateur') {
-        //     Auth::login($user);
-        //     return redirect()->route('');
-        // }
+         Auth::login($user);
+        if ($user->role === 'visiteur') {
+            return redirect('home');
+        } elseif ($user->role === 'organisateur') {
+            return redirect('organizer');
+        } elseif ($user->role === 'admin') {
+            return redirect('/dashboard');
+        }
 
-        event(new Registered($user));
-
-        Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }

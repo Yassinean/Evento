@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\auth\AuthenticatedSessionController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrganisateurController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\VisiteurController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,8 +41,19 @@ Route::get('auth/google/callback', [SocialLoginController::class , 'callback'])-
 /**** End routing for auth google ****/
 
 
-
-
+/**** organisateur routing ****/
+Route::get('/organisateur/dashboard', [OrganisateurController::class , 'index'])->name('organisateur.dashboard');
+/**** end organisateur routing ****/
+/**** visiteur routing ****/
+Route::get('/', [VisiteurController::class , 'index'])->name('visiteur.home');
+/**** end visiteur routing ****/
+/**** admin routing ****/
+Route::get('/admin/dashboard', [AdminController::class , 'index'])->name('admin.dashboard');
+Route::post('/admin/createcategory' , [CategorieController::class , 'create'])->name('createcategory');
+Route::put('/admin/updatecategory/{id}' , [CategorieController::class , 'update'])->name('updatecategory');
+Route::delete('/admin/deletecategory/{id}' , [CategorieController::class , 'destroy'])->name('deletecategory');
+Route::post('/', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+/**** end admin routing ****/
 
 
 require __DIR__.'/auth.php';

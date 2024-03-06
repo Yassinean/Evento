@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -42,4 +43,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function admin(){
+        return $this->belongsTo(Admin::class);
+    }
+
+    public function organisateur(){
+        return $this->hasMany(Organisateur::class);
+    }
+    
+    public function visiteur(){
+        return $this->hasMany(Organisateur::class);
+    }
 }
