@@ -59,7 +59,7 @@ class RegisteredUserController extends Controller
         if ($user->role === 'visiteur') {
             return redirect('home');
         } elseif ($user->role === 'organisateur') {
-            return redirect('organizer');
+            return redirect('oraganisateur.dashboard');
         } elseif ($user->role === 'admin') {
             return redirect('/dashboard');
         }

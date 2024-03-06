@@ -74,7 +74,7 @@
     <!-- SIDEBAR -->
 
 
- 
+
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
@@ -118,7 +118,7 @@
 
                     <!-- Modal toggle -->
                     <button class="btn-download" type="button" data-modal-toggle="authentication-modal">
-                        Ajouter Categories
+                        Ajouter un événement
                     </button>
 
                     <!-- Main modal -->
@@ -143,13 +143,13 @@
                                     action="{{ route('createcategory') }}" method="POST">
                                     @csrf
                                     @method('POST')
-                                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ajouter une categorie
+                                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ajouter un événement
                                     </h3>
                                     <div>
-                                        <label for="categorie"
+                                        <label for="event"
                                             class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Saisir
-                                            le nom du categorie</label>
-                                        <input type="text" name="categ" id="categorie"
+                                            le nom d 'événement</label>
+                                        <input type="text" name="evnet" id="event"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                             required="">
                                     </div>
@@ -167,27 +167,27 @@
                     <i class='bx bxs-calendar-check'></i>
                     <span class="text">
                         <h3>1020</h3>
-                        <p>Nombre d'événement</p>
+                        <p>Nombre de réservation</p>
                     </span>
                 </li>
                 <li>
                     <i class='bx bxs-calendar-check'></i>
                     <span class="text">
                         <h3>1020</h3>
-                        <p>Nombre d'organisateur</p>
+                        <p>Nombre d 'événement</p>
                     </span>
                 </li>
                 <li>
                     <i class='bx bxs-group'></i>
                     <span class="text">
-                        <h3>{{ $visiteurCount }}</h3>
-                        <p>Visitors</p>
+                        <h3>1</h3>
+                        <p>Places disponibles</p>
                     </span>
                 </li>
                 <li>
                     <i class='bx bxs-dollar-circle'></i>
                     <span class="text">
-                        <h3> {{ $categoriecount }} </h3>
+                        <h3> 1 </h3>
                         <p>Nombre de categories</p>
                     </span>
                 </li>
@@ -197,20 +197,20 @@
             <div class="table-data">
                 <div class="order">
                     <div class="head">
-                        <h3>Categories</h3>
+                        <h3>Evénement</h3>
                         <i class='bx bx-search'></i>
                         <i class='bx bx-filter'></i>
                     </div>
                     <table>
                         <thead>
                             <tr>
-                                <th>Categorie</th>
+                                <th>Evenements</th>
                                 <th>Modifier</th>
                                 <th>Supprimer</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $c)
+                            @foreach ($event as $c)
                                 <tr>
                                     <td>{{ $c->name }}</td>
                                     <td>
@@ -284,36 +284,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $categories->links() }}
-                </div>
-                <div class="todo">
-                    <div class="head">
-                        <h3>Gestion des evenemets</h3>
-                        <i class='bx bx-plus'></i>
-                        <i class='bx bx-filter'></i>
-                    </div>
-                    <ul class="todo-list">
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="not-completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="not-completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </main>
