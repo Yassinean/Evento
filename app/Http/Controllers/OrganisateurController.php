@@ -7,8 +7,8 @@ use App\Models\Event;
 
 class OrganisateurController extends Controller
 {
-    public function index(){
-        $event = Event::get();
-        return view('organisateur.dashboard' , compact('event'));
-    }
+    // public function index(){
+    //     $event = Event::get();
+    //     return view('organisateur.dashboard' , compact('event'));
+    // }
 }

@@ -22,12 +22,19 @@ class EventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'imgevent' => 'required|string|max:255',
-            'titreevent' => 'required|string|max:255',
-            'descevent' => 'required|string|max:255',
-            'localevent' => 'required|string|max:255',
-            'datevent' => 'required|string|max:255',
-            'capaciteevent' => 'required|integer|max:255',
+
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'localisation' => 'required|string|max:255',
+            'date' => 'required|date',
+
+            'capacity' => 'required|integer|max:255',
+            'categorie_id' => 'required|exists:categories,id',
+
+            'organisateur_id' => 'required|exists:organisateurs,id',
+
+
         ];
     }
 }

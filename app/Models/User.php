@@ -49,10 +49,10 @@ class User extends Authenticatable
     }
 
     public function organisateur(){
-        return $this->hasMany(Organisateur::class);
+        return $this->hasOne(Organisateur::class);
     }
     
     public function visiteur(){
-        return $this->hasMany(Organisateur::class);
+        return $this->hasOne(Organisateur::class);
     }
 }

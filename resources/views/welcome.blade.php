@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/assets/css/tiny-slider.css" />
     <link rel="stylesheet" href="/assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
 
 </head>
 
@@ -95,8 +96,19 @@
                                         @if (Route::has('login'))
                                             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                                                 @auth
-                                                    <a href="{{ url('/dashboard') }}"
-                                                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+                                                    @if (Auth::hasRole('admin'))
+                                                        <a href="{{ url('/admin/dashboard') }}"
+                                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard
+                                                        </a>
+                                                    @elseif(Auth::hasRole('organisateur'))
+                                                        <a href="{{ url('/organisateur/dashboard') }}"
+                                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ url('/logout') }}"
+                                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Logout
+                                                        </a>
+                                                    @endif
                                                 @else
                                                     <a href="{{ route('login') }}"
                                                         class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
@@ -204,99 +216,49 @@
                 @endforeach
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".2s">
-                    <!-- Start Single Feature -->
-                    <div class="single-featuer">
-                        <img class="shape" src="assets/images/features/shape.svg" alt="#">
-                        <img class="shape2" src="assets/images/features/shape2.svg" alt="#">
-                        <span class="serial">01</span>
-                        <div class="service-icon">
-                            <i class="lni lni-microphone"></i>
-                        </div>
-                        <h3>Great Speakers</h3>
-                        <p>
-                            How you transform your business as tech, consumer, habits industry dynamic change, Find out
-                            from.
-                        </p>
-                    </div>
-                    <!-- End Single Feature -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".4s">
-                    <!-- Start Single Feature -->
-                    <div class="single-featuer">
-                        <img class="shape" src="assets/images/features/shape.svg" alt="#">
-                        <img class="shape2" src="assets/images/features/shape2.svg" alt="#">
-                        <span class="serial">02</span>
-                        <div class="service-icon">
-                            <i class="lni lni-users"></i>
-                        </div>
-                        <h3>New People</h3>
-                        <p>How you transform your business as tech, consumer, habits industry dynamic change, Find out
-                            from.</p>
-                    </div>
-                    <!-- End Single Feature -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".6s">
-                    <!-- Start Single Feature -->
-                    <div class="single-featuer">
-                        <img class="shape" src="assets/images/features/shape.svg" alt="#">
-                        <img class="shape2" src="assets/images/features/shape2.svg" alt="#">
-                        <span class="serial">03</span>
-                        <div class="service-icon">
-                            <i class="lni lni-bullhorn"></i>
-                        </div>
-                        <h3>Global Event</h3>
-                        <p>How you transform your business as tech, consumer, habits industry dynamic change, Find out
-                            from.</p>
-                    </div>
-                    <!-- End Single Feature -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".2s">
-                    <!-- Start Single Feature -->
-                    <div class="single-featuer">
-                        <img class="shape" src="assets/images/features/shape.svg" alt="#">
-                        <img class="shape2" src="assets/images/features/shape2.svg" alt="#">
-                        <span class="serial">04</span>
-                        <div class="service-icon">
-                            <i class="lni lni-heart"></i>
-                        </div>
-                        <h3>Get Inspired</h3>
-                        <p>How you transform your business as tech, consumer, habits industry dynamic change, Find out
-                            from.</p>
-                    </div>
-                    <!-- End Single Feature -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".4s">
-                    <!-- Start Single Feature -->
-                    <div class="single-featuer">
-                        <img class="shape" src="assets/images/features/shape.svg" alt="#">
-                        <img class="shape2" src="assets/images/features/shape2.svg" alt="#">
-                        <span class="serial">05</span>
-                        <div class="service-icon">
-                            <i class="lni lni-cup"></i>
-                        </div>
-                        <h3>Networking Session</h3>
-                        <p>How you transform your business as tech, consumer, habits industry dynamic change, Find out
-                            from.</p>
-                    </div>
-                    <!-- End Single Feature -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".6s">
-                    <!-- Start Single Feature -->
-                    <div class="single-featuer">
-                        <img class="shape" src="assets/images/features/shape.svg" alt="#">
-                        <img class="shape2" src="assets/images/features/shape2.svg" alt="#">
-                        <span class="serial">06</span>
-                        <div class="service-icon">
-                            <i class="lni lni-happy"></i>
-                        </div>
-                        <h3>Meet New Faces</h3>
-                        <p>How you transform your business as tech, consumer, habits industry dynamic change, Find out
-                            from.</p>
-                    </div>
-                    <!-- End Single Feature -->
+                <div class="container py-2">
+                    @if ($events->links()->data = 1)
+                        <div class="h1 text-center text-dark" id="pageHeaderTitle">Recent Events</div>
+                    @else
+                        <div class="h1 text-center text-dark" id="pageHeaderTitle">Events</div>
+                    @endif
+                    @foreach ($events as $event)
+                        @if ($event->status == 0)
+                            <article class="postcard light blue">
+                                <a class="postcard__img_link" href="#">
+                                    <img class="postcard__img" src="{{ asset('images/' . $event->image) }}"
+                                        alt="Image Title" />
+                                </a>
+                                <div class="postcard__text t-dark">
+                                    <h1 class="postcard__title blue"><a href="#">{{ $event->name }}</a></h1>
+                                    <div class="postcard__subtitle small">
+                                        <time datetime="2020-05-25 12:00:00">
+                                            <i class="fas fa-calendar-alt mr-2"></i>{{ $event->date }}
+                                        </time>
+                                    </div>
+                                    <div class="postcard__bar"></div>
+                                    <div class="postcard__preview-txt"> {{ $event->description }} </div>
+                                    <ul class="postcard__tagbox">
+                                        <li class="tag__item"><i
+                                                class="fas fa-tag mr-2"></i>{{ $event->categorie->name }}
+                                        </li>
+                                        <li class="tag__item"><i class="fas fa-clock mr-2"></i>{{ $event->capacity }}
+                                        </li>
+                                        <li class="tag__item play blue">
+                                            <a href="#"><i
+                                                    class="fas fa-play mr-2"></i>{{ $event->organisateur->user->name }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </article>
+                        @else
+                            <h3>No Event for now</h3>
+                        @endif
+                    @endforeach
+                    <div class="d-flex justify-content-center">{{ $events->links() }}</div>
                 </div>
             </div>
+
         </div>
     </section>
     <!-- /End Features Area -->

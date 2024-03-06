@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Categorie;
+use App\Models\Event;
+use App\Models\Organisateur;
 use App\Models\Visiteur;
 use Illuminate\Http\Request;
 
@@ -15,10 +17,12 @@ class AdminController extends Controller
     public function index()
     {
         $visiteurCount = Visiteur::count();
+        $organisateurCount = Organisateur::count();
         $categoriecount = Categorie::count();
         $categories = Categorie::paginate(4);
-
-        return view('admin.dashboard' , compact('categories' , 'visiteurCount' ,'categoriecount'));
+        $eventCount = Event::count();
+        $events = Event::paginate(10);
+        return view('admin.dashboard', compact('categories', 'visiteurCount', 'categoriecount', 'events', 'organisateurCount', 'eventCount'));
     }
 
     /**
@@ -66,9 +70,5 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        $categories = Categorie::findOrFail($id);
-        $categories->delete();
-
-        return redirect()->back();
     }
 }

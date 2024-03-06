@@ -37,25 +37,27 @@ Route::middleware('auth')->group(function () {
 
 
 /**** Routing for auth google ****/
-Route::get('auth/google/redirect', [SocialLoginController::class , 'redirect'])->name('auth.socialite.redirect');
-Route::get('auth/google/callback', [SocialLoginController::class , 'callback'])->name('auth.socialite.callback');
+Route::get('auth/google/redirect', [SocialLoginController::class, 'redirect'])->name('auth.socialite.redirect');
+Route::get('auth/google/callback', [SocialLoginController::class, 'callback'])->name('auth.socialite.callback');
 /**** End routing for auth google ****/
 
 
 /**** organisateur routing ****/
-Route::get('/organisateur/dashboard', [OrganisateurController::class , 'index'])->name('organisateur.dashboard');
-Route::post('/organisateur/createEvent', [EventController::class , 'create'])->name('createevent');
+Route::get('/organisateur/dashboard', [EventController::class, 'index'])->name('organisateur.dashboard');
+Route::post('/organisateur/dashboard/createEvent', [EventController::class, 'store'])->name('createevent');
+Route::delete('/organisateur/dashboard/{id}', [EventController::class, 'destroy'])->name('deleteevent');
+Route::put('/organisateur/dashboard/updateEvent/{id}', [EventController::class, 'update'])->name('updateevent');
 /**** end organisateur routing ****/
 /**** visiteur routing ****/
-Route::get('/', [VisiteurController::class , 'index'])->name('visiteur.home');
+Route::get('/', [VisiteurController::class, 'index'])->name('visiteur.home');
+Route::get('/event/{id}', [VisiteurController::class, 'index'])->name('visiteur.home');
 /**** end visiteur routing ****/
 /**** admin routing ****/
-Route::get('/admin/dashboard', [AdminController::class , 'index'])->name('admin.dashboard');
-Route::post('/admin/createcategory' , [CategorieController::class , 'create'])->name('createcategory');
-Route::put('/admin/updatecategory/{id}' , [CategorieController::class , 'update'])->name('updatecategory');
-Route::delete('/admin/deletecategory/{id}' , [CategorieController::class , 'destroy'])->name('deletecategory');
-Route::post('/', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::post('/admin/createcategory', [CategorieController::class, 'create'])->name('createcategory');
+Route::put('/admin/updatecategory/{id}', [CategorieController::class, 'update'])->name('updatecategory');
+Route::delete('/admin/deletecategory/{id}', [CategorieController::class, 'destroy'])->name('deletecategory');
+Route::put('/admin/dashboard/{event}', [EventController::class, 'updateStatus'])->name('events.update');
 /**** end admin routing ****/
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

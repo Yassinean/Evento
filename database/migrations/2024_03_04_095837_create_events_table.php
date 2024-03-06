@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('image');
             $table->date('date');
             $table->integer('capacity');
+            $table->boolean('status')->default(false);
             $table->foreignId('categorie_id')->nullable()->constrained('categories');
-            $table->foreignId('organisateur_id')->nullable()->constrained('users');
+            $table->foreignId('organisateur_id')->constrained('organisateurs');
             $table->timestamps();
         });
     }

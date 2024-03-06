@@ -66,8 +66,8 @@
             <li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <i class='bx bxs-log-out-circle'></i>
-                    <button type="submit" class="text">Logout</button>
+                    <i class='bx bxs-log-out-circle dark:text-white'></i>
+                    <button type="submit" class="text dark:text-white">Logout</button>
                 </form>
             </li>
         </ul>
@@ -167,14 +167,14 @@
                 <li>
                     <i class='bx bxs-calendar-check'></i>
                     <span class="text">
-                        <h3>1020</h3>
+                        <h3>{{ $eventCount }}</h3>
                         <p>Nombre d'événement</p>
                     </span>
                 </li>
                 <li>
                     <i class='bx bxs-calendar-check'></i>
                     <span class="text">
-                        <h3>1020</h3>
+                        <h3>{{ $organisateurCount }}</h3>
                         <p>Nombre d'organisateur</p>
                     </span>
                 </li>
@@ -182,7 +182,7 @@
                     <i class='bx bxs-group'></i>
                     <span class="text">
                         <h3>{{ $visiteurCount }}</h3>
-                        <p>Visitors</p>
+                        <p>Clients</p>
                     </span>
                 </li>
                 <li>
@@ -293,28 +293,29 @@
                         <i class='bx bx-plus'></i>
                         <i class='bx bx-filter'></i>
                     </div>
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     <ul class="todo-list">
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="not-completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="not-completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
+                        @foreach ($events as $event)
+                            <li class="{{ $event->status ? 'completed' : 'not-completed' }}">
+                                <p>{{ $event->name }}</p>
+                                <div>
+                                    <form action="{{ route('events.update', $event) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="status-toggle-btn">
+                                            {{ $event->status ? 'Send' : 'Wait' }}
+                                        </button>
+                                    </form>
+                                </div>
+                            </li>
+                        @endforeach
                     </ul>
+                    {{ $events->links() }}
                 </div>
             </div>
         </main>

@@ -15,20 +15,23 @@ class Event extends Model
         'description',
         'localisation',
         'date',
-        'capacite',
+        'capacity',
         'categorie_id',
         'organisateur_id',
     ];
-    
-    public function categorie(){
+
+    public function categorie()
+    {
         return $this->belongsTo(Categorie::class);
     }
-    
-    public function reservation(){
+
+    public function reservation()
+    {
         return $this->hasMany(Reservation::class);
     }
 
-    public function organisateur(){
+    public function organisateur()
+    {
         return $this->belongsTo(Organisateur::class);
     }
 }
