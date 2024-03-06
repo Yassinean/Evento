@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => 'required',
         ]);
@@ -46,8 +46,8 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
-        
-          if ($request->role === 'visiteur') {
+
+        if ($request->role === 'visiteur') {
             Visiteur::create(['user_id' => $user->id]);
         } elseif ($request->role === 'organisateur') {
             organisateur::create(['user_id' => $user->id]);
@@ -55,9 +55,9 @@ class RegisteredUserController extends Controller
             Admin::create(['user_id' => $user->id]);
         }
 
-         Auth::login($user);
+        Auth::login($user);
         if ($user->role === 'visiteur') {
-            return redirect('home');
+            return redirect('/');
         } elseif ($user->role === 'organisateur') {
             return redirect('organisateur/dashboard');
         } elseif ($user->role === 'admin') {

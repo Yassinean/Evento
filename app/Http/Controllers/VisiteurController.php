@@ -15,7 +15,10 @@ class VisiteurController extends Controller
         return view('welcome', compact('categories', 'events'));
     }
 
-    public function detailEvent(){
-         
+    public function detailEvent($id)
+    {
+        $events = Event::find($id);
+        // dd($events);
+        return view('single_page_event', compact('events'));
     }
 }

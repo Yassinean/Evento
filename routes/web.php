@@ -50,7 +50,7 @@ Route::put('/organisateur/dashboard/updateEvent/{id}', [EventController::class, 
 /**** end organisateur routing ****/
 /**** visiteur routing ****/
 Route::get('/', [VisiteurController::class, 'index'])->name('visiteur.home');
-Route::get('/event/{id}', [VisiteurController::class, 'index'])->name('visiteur.home');
+Route::get('/event/{id}', [VisiteurController::class, 'detailEvent'])->name('singleEvent');
 /**** end visiteur routing ****/
 /**** admin routing ****/
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');

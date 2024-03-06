@@ -96,11 +96,11 @@
                                         @if (Route::has('login'))
                                             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                                                 @auth
-                                                    @if (Auth::hasRole('admin'))
-                                                        <a href="{{ url('/admin/dashboard') }}"
-                                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard
-                                                        </a>
-                                                    @elseif(Auth::hasRole('organisateur'))
+                                                    {{-- @if (Auth::hasRole('admin')) --}}
+                                                    <a href="{{ url('/admin/dashboard') }}"
+                                                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard
+                                                    </a>
+                                                    {{-- @elseif(Auth::hasRole('organisateur'))
                                                         <a href="{{ url('/organisateur/dashboard') }}"
                                                             class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard
                                                         </a>
@@ -108,8 +108,8 @@
                                                         <a href="{{ url('/logout') }}"
                                                             class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Logout
                                                         </a>
-                                                    @endif
-                                                @else
+                                                    @endif --}}
+                                                    {{-- @else --}}
                                                     <a href="{{ route('login') }}"
                                                         class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
                                                         in</a>
@@ -225,12 +225,13 @@
                     @foreach ($events as $event)
                         @if ($event->status == 0)
                             <article class="postcard light blue">
-                                <a class="postcard__img_link" href="#">
+                                <a class="postcard__img_link" href="/event/{{ $event->id }}">
                                     <img class="postcard__img" src="{{ asset('images/' . $event->image) }}"
                                         alt="Image Title" />
                                 </a>
                                 <div class="postcard__text t-dark">
-                                    <h1 class="postcard__title blue"><a href="#">{{ $event->name }}</a></h1>
+                                    <h1 class="postcard__title blue"><a
+                                            href="/event/{{ $event->id }}">{{ $event->name }}</a></h1>
                                     <div class="postcard__subtitle small">
                                         <time datetime="2020-05-25 12:00:00">
                                             <i class="fas fa-calendar-alt mr-2"></i>{{ $event->date }}

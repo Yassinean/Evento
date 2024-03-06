@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visiteur;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ReservationRequest;
 
 class ReservationController extends Controller
 {
@@ -18,9 +21,23 @@ class ReservationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(ReservationRequest $request, $eventId)
     {
-        //
+        $validatedData = $request->validated();
+
+        $client = Visiteur::where('user_id' , Auth::id())->first(); // Get authenticated user's ID
+
+        // Ensure that the authenticated user is a client
+        // Optionally, you can add additional checks here if needed
+
+        // Create reservation
+        Reservation::create([
+            'event_id' => $eventId,
+            'client_id' => $client->id,
+            'status' => $validatedData['status'] , // Set default if 'status' is not provided
+        ]);
+
+        return redirect()->back();
     }
 
     /**
