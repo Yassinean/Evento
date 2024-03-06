@@ -12,7 +12,7 @@ class EventController extends Controller
     {
         $events = Event::all();
 
-        return view('organizer.dashboard' , compact('events'));
+        return view('organisateur.dashboard' , compact('events'));
     }
     public function create(EventRequest $request){
         $validatedData = $request->validate($request->rules());
@@ -26,12 +26,12 @@ class EventController extends Controller
         }
 
         Event::create([
-            'name' => $validatedData['name'],
-            'localisation' => $validatedData['localisation'],
-            'description' => $validatedData['description'],
-            'image' => $imageName,
-            'date'=> $validatedData['date'],
-            'capacity' => $validatedData['capacity']
+            'imgevent' => $imageName['image'],
+            'titreevent' => $validatedData['name'],
+            'descevent' => $validatedData['description'],
+            'localevent' => $validatedData['localisation'],
+            'datevent'=> $validatedData['date'],
+            'capaciteevent' => $validatedData['capacity']
         ]);
 
         return redirect()->back();

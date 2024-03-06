@@ -3,8 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\auth\AuthenticatedSessionController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\OrganisateurController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\OrganisateurController;
 use App\Http\Controllers\VisiteurController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,7 @@ Route::get('auth/google/callback', [SocialLoginController::class , 'callback'])-
 
 /**** organisateur routing ****/
 Route::get('/organisateur/dashboard', [OrganisateurController::class , 'index'])->name('organisateur.dashboard');
+Route::post('/organisateur/createEvent', [EventController::class , 'create'])->name('createevent');
 /**** end organisateur routing ****/
 /**** visiteur routing ****/
 Route::get('/', [VisiteurController::class , 'index'])->name('visiteur.home');

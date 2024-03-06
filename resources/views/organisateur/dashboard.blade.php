@@ -126,7 +126,7 @@
                         class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
                         <div class="relative w-full max-w-md px-4 h-full md:h-auto">
                             <!-- Modal content -->
-                            <div class="bg-white rounded-lg shadow relative dark:bg-gray-700">
+                            <div class="bg-white rounded-lg shadow relative mt-48 dark:bg-gray-700">
                                 <div class="flex justify-end p-2">
                                     <button type="button"
                                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
@@ -139,17 +139,53 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                                    action="{{ route('createcategory') }}" method="POST">
+                                <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{route('createevent')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('POST')
                                     <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ajouter un événement
                                     </h3>
                                     <div>
+                                        <input type="file" name="imgevent" id="event"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            required="">
+                                    </div>
+                                    <div>
                                         <label for="event"
-                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Saisir
-                                            le nom d 'événement</label>
-                                        <input type="text" name="evnet" id="event"
+                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Titre
+                                            d'événement</label>
+                                        <input type="text" name="titreevent" id="event"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            required="">
+                                    </div>
+                                    <div>
+                                        <label for="event"
+                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Description
+                                            d'événement</label>
+                                        <input type="text" name="descevent" id="event"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            required="">
+                                    </div>
+                                    <div>
+                                        <label for="event"
+                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Localisation
+                                            d'événement</label>
+                                        <input type="text" name="localevent" id="event"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            required="">
+                                    </div>
+                                    <div>
+                                        <label for="event"
+                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Date
+                                            d'événement</label>
+                                        <input type="date" name="datevent" id="event"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                            required="">
+                                    </div>
+                                    <div>
+                                        <label for="event"
+                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Capacité
+                                            d'événement</label>
+                                        <input type="number" name="capaciteevent" id="event"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                             required="">
                                     </div>
@@ -204,7 +240,12 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Evenements</th>
+                                <th>Image</th>
+                                <th>Titre</th>
+                                <th>Description</th>
+                                <th>Localisation</th>
+                                <th>Date</th>
+                                <th>Capacité</th>
                                 <th>Modifier</th>
                                 <th>Supprimer</th>
                             </tr>
@@ -212,7 +253,12 @@
                         <tbody>
                             @foreach ($event as $c)
                                 <tr>
+                                    <td>{{ $c->image }}</td>
                                     <td>{{ $c->name }}</td>
+                                    <td>{{ $c->description }}</td>
+                                    <td>{{ $c->localisation }}</td>
+                                    <td>{{ $c->date }}</td>
+                                    <td>{{ $c->capacity }}</td>
                                     <td>
                                         <button data-modal-toggle="authentication-modal-1" type="button"
                                             class="inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md">
