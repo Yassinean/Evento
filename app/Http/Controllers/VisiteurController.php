@@ -11,10 +11,9 @@ class VisiteurController extends Controller
 {
     public function index(Request $request)
     {
-
-
         $categories = Categorie::select('categories.name', 'categories.id', DB::raw('count(events.id) as event_count'))
             ->join('events', 'events.categorie_id', '=', 'categories.id')
+            ->where('events.status', '=', 1)
             ->groupBy('categories.id')
             ->get();
         $categoryId = $request->input('id');

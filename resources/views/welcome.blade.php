@@ -69,9 +69,6 @@
                                             aria-expanded="false" aria-label="Toggle navigation">Pages</a>
                                         <ul class="sub-menu collapse" id="submenu-1-1">
                                             <li class="nav-item"><a href="about-us.html">About Us</a></li>
-                                            <li class="nav-item"><a href="gallery.html">Gallery</a></li>
-                                            <li class="nav-item"><a href="pricing.html">Pricing</a></li>
-                                            <li class="nav-item"><a href="sponsors.html">Sponsors</a></li>
                                             <li class="nav-item"><a href="mail-success.html">Mail Success</a></li>
                                             <li class="nav-item"><a href="404.html">404 Error</a></li>
                                         </ul>
@@ -80,47 +77,34 @@
                                         <a href="schedule.html" aria-label="Toggle navigation">Schedule</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="speakers.html" aria-label="Toggle navigation">Speakers</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                            data-bs-target="#submenu-1-2" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Blog</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-2">
-                                            <li class="nav-item"><a href="blog-grid.html">Blog Grid</a>
-                                            </li>
-                                            <li class="nav-item"><a href="blog-single.html">Blog Single</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        @if (Route::has('login'))
-                                            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                                        <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                                            @if (Route::has('login'))
                                                 @auth
-                                                    {{-- @if (Auth::hasRole('admin')) --}}
-                                                    <a href="{{ url('/admin/dashboard') }}"
-                                                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard
-                                                    </a>
-                                                    {{-- @elseif(Auth::hasRole('organisateur'))
+                                                    @if (Auth::user()->role == 'admin')
+                                                        <a href="{{ url('/admin/dashboard') }}"
+                                                            class="font-semibold text-gray-600 hover:text-gray-900">Dashboard</a>
+                                                    @elseif(Auth::user()->role == 'organisateur')
                                                         <a href="{{ url('/organisateur/dashboard') }}"
-                                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard
-                                                        </a>
+                                                            class="font-semibold text-gray-600 hover:text-gray-900">Dashboard</a>
                                                     @else
-                                                        <a href="{{ url('/logout') }}"
-                                                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Logout
-                                                        </a>
-                                                    @endif --}}
-                                                    {{-- @else --}}
-                                                    <a href="{{ route('login') }}"
-                                                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                                                        in</a>
-
+                                                        <!-- Logout Form -->
+                                                        <form method="POST" action="{{ route('logout') }}">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="font-semibold text-gray-600 hover:text-gray-900">Logout</button>
+                                                        </form>
+                                                    @endif
+                                                @else
                                                     @if (Route::has('register'))
                                                         <a href="{{ route('register') }}"
-                                                            class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                                                            class="ml-4 font-semibold text-gray-600 hover:text-gray-900">Register</a>
                                                     @endif
+                                                    <a href="{{ route('login') }}"
+                                                        class="font-semibold text-gray-600 hover:text-gray-900">Log in</a>
                                                 @endauth
-                                            </div>
-                                        @endif
+                                            @endif
+                                        </div>
+
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
@@ -235,7 +219,7 @@
             </form>
             @if (session()->has('eventSearchResults'))
                 <div class="mt-4">
-                    <h2 class="text-lg font-semibold mb-2">Search Results:</h2>
+                    <h2 class="text-lg font-semibold mb-2">Evénement cherché:</h2>
                     <ul>
                         @foreach (session('eventSearchResults') as $event)
                             <article class="postcard light blue">
@@ -285,7 +269,7 @@
                 <div class="container py-2">
                     <div class="h1 text-center text-dark" id="pageHeaderTitle">Events</div>
                     @foreach ($events as $event)
-                        @if ($event->status == 0)
+                        @if ($event->status)
                             <article class="postcard light blue">
                                 <a class="postcard__img_link" href="/event/{{ $event->id }}">
                                     <img class="postcard__img" src="{{ asset('images/' . $event->image) }}"
@@ -314,8 +298,6 @@
                                     </ul>
                                 </div>
                             </article>
-                        @else
-                            <h3>No Event for now</h3>
                         @endif
                     @endforeach
                     <div class="d-flex justify-content-center">{{ $events->links() }}</div>

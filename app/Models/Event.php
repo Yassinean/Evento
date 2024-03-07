@@ -16,6 +16,7 @@ class Event extends Model
         'localisation',
         'date',
         'capacity',
+        'status',
         'categorie_id',
         'organisateur_id',
     ];

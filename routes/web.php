@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\auth\AuthenticatedSessionController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\OrganisateurController;
-use App\Http\Controllers\VisiteurController;
-use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VisiteurController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\OrganisateurController;
+use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,24 +44,30 @@ Route::get('auth/google/callback', [SocialLoginController::class, 'callback'])->
 
 
 /**** organisateur routing ****/
-Route::get('/organisateur/users', [OrganisateurController::class, 'users'])->name('organisateur.users');
-Route::get('/organisateur/dashboard', [EventController::class, 'index'])->name('organisateur.dashboard');
-Route::post('/organisateur/dashboard/createEvent', [EventController::class, 'store'])->name('createevent');
-Route::delete('/organisateur/dashboard/{id}', [EventController::class, 'destroy'])->name('deleteevent');
-Route::put('/organisateur/dashboard/updateEvent/{id}', [EventController::class, 'update'])->name('updateevent');
+Route::middleware(['auth', 'CheckRole:organisateur'])->group(function () {
+    Route::get('/organisateur/users', [OrganisateurController::class, 'users'])->name('organisateur.users');
+    Route::get('/organisateur/dashboard', [EventController::class, 'index'])->name('organisateur.dashboard');
+    Route::post('/organisateur/dashboard/createEvent', [EventController::class, 'store'])->name('createevent');
+    Route::delete('/organisateur/dashboard/{id}', [EventController::class, 'destroy'])->name('deleteevent');
+    Route::patch('/organisateur/dashboard/{event}', [EventController::class, 'update'])->name('updateevent');
+});
 /**** end organisateur routing ****/
 /**** visiteur routing ****/
 Route::get('/', [VisiteurController::class, 'index'])->name('visiteur.home');
-Route::get('/event/{id}', [VisiteurController::class, 'detailEvent'])->name('singleEvent');
 Route::get('search', [VisiteurController::class, 'search'])->name('searchname');
 Route::get('/filter', [VisiteurController::class, 'index'])->name('filtername');
+Route::middleware(['auth', 'CheckRole:visiteur'])->group(function () {
+    Route::get('/event/{id}', [VisiteurController::class, 'detailEvent'])->name('singleEvent');
+});
 /**** end visiteur routing ****/
 /**** admin routing ****/
-Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-Route::post('/admin/createcategory', [CategorieController::class, 'create'])->name('createcategory');
-Route::put('/admin/updatecategory/{id}', [CategorieController::class, 'update'])->name('updatecategory');
-Route::delete('/admin/deletecategory/{id}', [CategorieController::class, 'destroy'])->name('deletecategory');
-Route::put('/admin/dashboard/{event}', [EventController::class, 'updateStatus'])->name('events.update');
+Route::middleware(['auth', CheckRole::class . ':admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::post('/admin/createcategory', [CategorieController::class, 'create'])->name('createcategory');
+    Route::put('/admin/updatecategory/{id}', [CategorieController::class, 'update'])->name('updatecategory');
+    Route::delete('/admin/deletecategory/{id}', [CategorieController::class, 'destroy'])->name('deletecategory');
+    Route::put('/admin/dashboard/{event}', [EventController::class, 'updateStatus'])->name('events.update');
+});
 /**** end admin routing ****/
 
 require __DIR__ . '/auth.php';

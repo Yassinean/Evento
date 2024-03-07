@@ -33,12 +33,12 @@ class EventController extends Controller
         return redirect()->back();
     }
 
-    public function update(EventRequest $request, Event $event)
-    {   
+    public function update(EventRequest $request, $event)
+    {
         $validatedData = $request->validated();
-        // dd($request->file('image'));
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
+        dd($request->file('nimage'));
+        if ($request->hasFile('nimage')) {
+            $image = $request->file('nimage');
             $imageName = time() . '.' . $image->extension();
             $image->move(public_path('public/images'), $imageName);
         } else {
@@ -47,13 +47,13 @@ class EventController extends Controller
         $event->update([
             'image' => $validatedData['nimage'],
             'name' => $validatedData['nname'],
-            'description' =>$validatedData['ndescription'],
-            'localisation' =>$validatedData['nlocalisation'],
-            'date' =>$validatedData['ndate'],
-            'capacity' =>$validatedData['ncapacity'],
-            'categorie_id' =>$validatedData['ncategorie_id'],
+            'description' => $validatedData['ndescription'],
+            'localisation' => $validatedData['nlocalisation'],
+            'date' => $validatedData['ndate'],
+            'capacity' => $validatedData['ncapacity'],
+            'categorie_id' => $validatedData['ncategorie_id'],
         ]);
-
+        // dd($event);
         return redirect()->back();
     }
 
@@ -62,7 +62,7 @@ class EventController extends Controller
         // Check if user has permission to update event status (you can customize this logic based on your requirements)
 
         $event->update(['status' => !$event->status]); // Toggle the status (assuming it's a boolean field)
-
+        // dd($event);
         return redirect()->back()->with('success', 'Event status updated successfully');
     }
 
