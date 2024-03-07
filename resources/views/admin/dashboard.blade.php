@@ -1,77 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <!-- My modal -->
-    <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
-    <!-- My CSS -->
-    <link rel="stylesheet" href="/assets/css/style.css" />
-
-    <title>AdminHub</title>
-</head>
-
-<body>
-
+<x-header/>
 
     <!-- SIDEBAR -->
-    <section id="sidebar">
-        <a href="#" class="brand">
-            <i class='bx bxs-smile'></i>
-            <span class="text">AdminHub</span>
-        </a>
-        <ul class="side-menu top">
-            <li class="active">
-                <a href="#">
-                    <i class='bx bxs-dashboard'></i>
-                    <span class="text">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-shopping-bag-alt'></i>
-                    <span class="text">My Store</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-doughnut-chart'></i>
-                    <span class="text">Analytics</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-message-dots'></i>
-                    <span class="text">Message</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-group'></i>
-                    <span class="text">Team</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="side-menu">
-            <li>
-                <a href="#">
-                    <i class='bx bxs-cog'></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
-            <li>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <i class='bx bxs-log-out-circle dark:text-white'></i>
-                    <button type="submit" class="text dark:text-white">Logout</button>
-                </form>
-            </li>
-        </ul>
-    </section>
+    <x-side-bar/>
     <!-- SIDEBAR -->
 
 
@@ -116,12 +46,6 @@
                     </ul>
                 </div>
                 <div class="max-w-2xl mx-auto">
-
-                    <!-- Modal toggle -->
-                    <button class="btn-download" type="button" data-modal-toggle="authentication-modal">
-                        Ajouter Categories
-                    </button>
-
                     <!-- Main modal -->
                     <div id="authentication-modal" aria-hidden="true"
                         class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
@@ -198,8 +122,8 @@
             <div class="table-data">
                 <div class="order">
                     <div class="head">
-                        <h3>Categories</h3>
-                        <i class='bx bx-search'></i>
+                        <h3>Gestion des Categories</h3>
+                        <button type="button" data-modal-toggle="authentication-modal" class='bx bx-plus'></button>
                         <i class='bx bx-filter'></i>
                     </div>
                     <table>
@@ -217,12 +141,14 @@
                                     <td>
                                         <button data-modal-toggle="authentication-modal-1" type="button"
                                             class="inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
-                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                             </svg>
-                                            Modifier
+
+
                                         </button>
                                         <div id="authentication-modal-1" aria-hidden="true"
                                             class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
@@ -256,7 +182,7 @@
                                                                 le nouvel nom du categorie</label>
                                                             <input type="text" name="newcateg" id="categorie"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                                required="">
+                                                                required="" value="{{ $c->name }}">
                                                         </div>
                                                         <button type="submit"
                                                             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modifier</button>
@@ -277,7 +203,6 @@
                                                         stroke-width="2"
                                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>
-                                                Delete
                                             </button>
                                         </form>
                                     </td>

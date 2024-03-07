@@ -44,7 +44,6 @@ class EventController extends Controller
         } else {
             $imageName = null;
         }
-
         $event->update([
             'image' => $validatedData['nimage'],
             'name' => $validatedData['nname'],

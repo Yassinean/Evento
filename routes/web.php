@@ -43,6 +43,7 @@ Route::get('auth/google/callback', [SocialLoginController::class, 'callback'])->
 
 
 /**** organisateur routing ****/
+Route::get('/organisateur/users', [OrganisateurController::class, 'users'])->name('organisateur.users');
 Route::get('/organisateur/dashboard', [EventController::class, 'index'])->name('organisateur.dashboard');
 Route::post('/organisateur/dashboard/createEvent', [EventController::class, 'store'])->name('createevent');
 Route::delete('/organisateur/dashboard/{id}', [EventController::class, 'destroy'])->name('deleteevent');
@@ -51,6 +52,8 @@ Route::put('/organisateur/dashboard/updateEvent/{id}', [EventController::class, 
 /**** visiteur routing ****/
 Route::get('/', [VisiteurController::class, 'index'])->name('visiteur.home');
 Route::get('/event/{id}', [VisiteurController::class, 'detailEvent'])->name('singleEvent');
+Route::get('search', [VisiteurController::class, 'search'])->name('searchname');
+Route::get('/filter', [VisiteurController::class, 'index'])->name('filtername');
 /**** end visiteur routing ****/
 /**** admin routing ****/
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');

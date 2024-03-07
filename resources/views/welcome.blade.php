@@ -208,20 +208,82 @@
                     </div>
                 </div>
             </div>
+            <form action="{{ route('searchname') }}" method="get">
+                @csrf
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-10 col-lg-8">
+                        <form class="card card-sm">
+                            <div class="card-body row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <i class="fas fa-search h4 text-body"></i>
+                                </div>
+                                <!--end of col-->
+                                <div class="col">
+                                    <input class="form-control form-control-lg form-control-borderless" type="search"
+                                        name="search" placeholder="Search topics or keywords">
+                                </div>
+                                <!--end of col-->
+                                <div class="col-auto">
+                                    <button class="btn btn-lg btn-primary" type="submit">Search</button>
+                                </div>
+                                <!--end of col-->
+                            </div>
+                        </form>
+                    </div>
+                    <!--end of col-->
+                </div>
+            </form>
+            @if (session()->has('eventSearchResults'))
+                <div class="mt-4">
+                    <h2 class="text-lg font-semibold mb-2">Search Results:</h2>
+                    <ul>
+                        @foreach (session('eventSearchResults') as $event)
+                            <article class="postcard light blue">
+                                <a class="postcard__img_link" href="/event/{{ $event->id }}">
+                                    <img class="postcard__img" src="{{ asset('images/' . $event->image) }}"
+                                        alt="Image Title" />
+                                </a>
+                                <div class="postcard__text t-dark">
+                                    <h1 class="postcard__title blue"><a
+                                            href="/event/{{ $event->id }}">{{ $event->name }}</a></h1>
+                                    <div class="postcard__subtitle small">
+                                        <time datetime="2020-05-25 12:00:00">
+                                            <i class="fas fa-calendar-alt mr-2"></i>{{ $event->date }}
+                                        </time>
+                                    </div>
+                                    <div class="postcard__bar"></div>
+                                    <div class="postcard__preview-txt"> {{ $event->description }} </div>
+                                    <ul class="postcard__tagbox">
+                                        <li class="tag__item"><i
+                                                class="fas fa-tag mr-2"></i>{{ $event->categorie->name }}
+                                        </li>
+                                        <li class="tag__item"><i class="fas fa-clock mr-2"></i>{{ $event->capacity }}
+                                        </li>
+                                        <li class="tag__item play blue">
+                                            <a href="#"><i
+                                                    class="fas fa-play mr-2"></i>{{ $event->organisateur->user->name }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </article>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="d-flex justify-content-evenly gap-2">
-                @foreach ($categories as $c)
-                    <button class="service-icon" style="width: 25%">
-                        <span>{{ $c->name }}</span>
-                    </button>
+                @foreach ($categories as $cat)
+                    <form action=" {{ route('filtername') }}" method="get">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $cat->id }}">
+                        <button type="submit" class="service-icon" style="width: auto">
+                            <span>{{ $cat->name }} : {{ $cat->event_count }}</span>
+                        </button>
+                    </form>
                 @endforeach
             </div>
             <div class="row">
                 <div class="container py-2">
-                    @if ($events->links()->data = 1)
-                        <div class="h1 text-center text-dark" id="pageHeaderTitle">Recent Events</div>
-                    @else
-                        <div class="h1 text-center text-dark" id="pageHeaderTitle">Events</div>
-                    @endif
+                    <div class="h1 text-center text-dark" id="pageHeaderTitle">Events</div>
                     @foreach ($events as $event)
                         @if ($event->status == 0)
                             <article class="postcard light blue">

@@ -2,16 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Event;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
 
 class VisiteurController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::paginate(10);
-        $categories = Categorie::get();
+
+
+        $categories = Categorie::select('categories.name', 'categories.id', DB::raw('count(events.id) as event_count'))
+            ->join('events', 'events.categorie_id', '=', 'categories.id')
+            ->groupBy('categories.id')
+            ->get();
+        $categoryId = $request->input('id');
+        if ($categoryId) {
+            $query = Event::query();
+            $query->where('categorie_id', $categoryId);
+            $events = $query->with('categorie')->paginate(20);
+        } else {
+            $events = Event::paginate(10);
+        }
+
         return view('welcome', compact('categories', 'events'));
     }
 
@@ -20,5 +34,20 @@ class VisiteurController extends Controller
         $events = Event::find($id);
         // dd($events);
         return view('single_page_event', compact('events'));
+    }
+
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('search');
+        $eventSearchResults = [];
+        if ($searchQuery) {
+            $eventSearchResults = Event::where('name', 'like', '%' . $searchQuery . '%')->get();
+        }
+        // dd($eventSearchResults);
+        return redirect()->back()->with('eventSearchResults', $eventSearchResults);
+    }
+
+    public function filterEvents(Request $request)
+    {
     }
 }
