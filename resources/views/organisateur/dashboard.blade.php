@@ -230,7 +230,7 @@
                                                     </button>
                                                 </div>
                                                 <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                                                    action="{{ route('updateevent', $event) }}" method="POST"
+                                                    action="{{ route('updateevent', $event->id) }}" method="POST"
                                                     enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PATCH')

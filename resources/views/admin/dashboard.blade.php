@@ -135,9 +135,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($categories as $c)
+                        @foreach ($categories as $categorie)
                             <tr>
-                                <td>{{ $c->name }}</td>
+                                <td>{{ $categorie->name }}</td>
                                 <td>
                                     <button data-modal-toggle="authentication-modal-1" type="button"
                                         class="inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md">
@@ -167,7 +167,7 @@
                                                     </button>
                                                 </div>
                                                 <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                                                    action="{{ route('updatecategory', ['id' => $c->id]) }}"
+                                                    action="{{ route('updatecategory', ['id' => $categorie->id]) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('put')
@@ -180,7 +180,7 @@
                                                             le nouvel nom du categorie</label>
                                                         <input type="text" name="newcateg" id="categorie"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                            required="" value="{{ $c->name }}">
+                                                            required="" value="{{ $categorie->name }}">
                                                     </div>
                                                     <button type="submit"
                                                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modifier</button>
@@ -190,7 +190,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <form action="{{ route('deletecategory', ['id' => $c->id]) }}" method="POST">
+                                    <form action="{{ route('deletecategory', ['id' => $categorie->id]) }}"
+                                        method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button
@@ -223,7 +224,8 @@
 
                 <ul class="todo-list">
                     @foreach ($events as $event)
-                        <li class="{{ $event->status ? 'completed' : 'not-completed' }}">
+                        <li
+                            class="{{ $event->status ? 'completed bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 dark:text-white hover:border-green-600 hover:bg-green-500 shadow-md py-2 px-6 inline-flex items-center' : 'not-completed bg-white text-gray-800 font-bold rounded border-b-2 border-yellow-500 hover:border-yellow-600 dark:text-white hover:bg-yellow-500 shadow-md py-2 px-6 inline-flex items-center' }}">
                             <p>{{ $event->name }}</p>
                             <div>
                                 <form action="{{ route('events.update', $event) }}" method="POST">
@@ -231,7 +233,7 @@
                                     @method('PUT')
                                     <input type="hidden" name="status" value="{{ $event->id }}">
                                     <button type="submit" class="status-toggle-btn">
-                                        {{ $event->status ? 'Send' : 'Wait' }}
+                                        {{ $event->status ? 'Publié' : 'En attent' }}
                                     </button>
                                 </form>
                             </div>

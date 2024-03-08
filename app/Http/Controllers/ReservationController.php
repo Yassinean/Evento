@@ -25,20 +25,16 @@ class ReservationController extends Controller
     {
         $validatedData = $request->validated();
 
-        $client = Visiteur::where('user_id' , Auth::id())->first(); // Get authenticated user's ID
-
-        // Ensure that the authenticated user is a client
-        // Optionally, you can add additional checks here if needed
-
-        // Create reservation
+        $client = Visiteur::where('user_id',  Auth::id())->first();
         Reservation::create([
             'event_id' => $eventId,
             'client_id' => $client->id,
-            'status' => $validatedData['status'] , // Set default if 'status' is not provided
+            'status' => $validatedData['status'],
         ]);
 
-        return redirect()->back();
+        return redirect()->route('ticket');
     }
+
 
     /**
      * Store a newly created resource in storage.

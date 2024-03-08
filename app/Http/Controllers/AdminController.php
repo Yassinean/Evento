@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Admin;
-use App\Models\Categorie;
 use App\Models\Event;
-use App\Models\Organisateur;
 use App\Models\Visiteur;
+use App\Models\Categorie;
+use App\Models\Organisateur;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -19,12 +20,26 @@ class AdminController extends Controller
         $visiteurCount = Visiteur::count();
         $organisateurCount = Organisateur::count();
         $categoriecount = Categorie::count();
-        $categories = Categorie::paginate(4);
+        $categories = Categorie::paginate(5);
         $eventCount = Event::count();
         $events = Event::paginate(10);
         return view('admin.dashboard', compact('categories', 'visiteurCount', 'categoriecount', 'events', 'organisateurCount', 'eventCount'));
     }
 
+    public function users()
+    {
+
+        $users = User::get();
+
+        return view('admin.users', compact('users'));
+    }
+
+    public function updateStatus(Request $request, User $usr)
+    {
+        $usr->update(['status' => !$usr->status]);
+        // dd($usr);
+        return redirect()->back()->with('success', 'Event status updated successfully');
+    }
     /**
      * Show the form for creating a new resource.
      */

@@ -18,4 +18,9 @@ class Reservation extends Model
     public function events(){
         return $this->belongsTo(Event::class);
     }
+    
+    public function visiteur()
+    {
+        return $this->belongsTo(Visiteur::class, 'visiteur_id');
+    }
 }

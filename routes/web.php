@@ -45,7 +45,6 @@ Route::get('auth/google/callback', [SocialLoginController::class, 'callback'])->
 
 /**** organisateur routing ****/
 Route::middleware(['auth', 'CheckRole:organisateur'])->group(function () {
-    Route::get('/organisateur/users', [OrganisateurController::class, 'users'])->name('organisateur.users');
     Route::get('/organisateur/dashboard', [EventController::class, 'index'])->name('organisateur.dashboard');
     Route::post('/organisateur/dashboard/createEvent', [EventController::class, 'store'])->name('createevent');
     Route::delete('/organisateur/dashboard/{id}', [EventController::class, 'destroy'])->name('deleteevent');
@@ -63,6 +62,7 @@ Route::middleware(['auth', 'CheckRole:visiteur'])->group(function () {
 /**** admin routing ****/
 Route::middleware(['auth', CheckRole::class . ':admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::post('/admin/createcategory', [CategorieController::class, 'create'])->name('createcategory');
     Route::put('/admin/updatecategory/{id}', [CategorieController::class, 'update'])->name('updatecategory');
     Route::delete('/admin/deletecategory/{id}', [CategorieController::class, 'destroy'])->name('deletecategory');

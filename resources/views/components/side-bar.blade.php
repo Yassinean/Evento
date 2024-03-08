@@ -5,17 +5,24 @@
             <span class="text">AdminHub</span>
         </a>
         <ul class="side-menu top">
-            <li class="active">
-                <a href="{{ URL('organisateur/dashboard') }}">
-                    <i class='bx bxs-dashboard'></i>
-                    <span class="text">Dashboard</span>
-                </a>
-            </li>
             @if (Auth::user()->role == 'admin')
-                <li>
-                    <a href="{{ URL('organisateur/users') }}">
+                <li class="active">
+                    <a href="{{ URL('admin/dashboard') }}">
+                        <i class='bx bxs-dashboard'></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="{{ URL('admin/users') }}">
                         <i class='bx bxs-group'></i>
                         <span class="text">Team</span>
+                    </a>
+                </li>
+            @else
+                <li class="active">
+                    <a href="{{ URL('organisateur/dashboard') }}">
+                        <i class='bx bxs-dashboard'></i>
+                        <span class="text">Dashboard</span>
                     </a>
                 </li>
             @endif

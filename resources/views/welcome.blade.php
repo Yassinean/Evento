@@ -217,7 +217,7 @@
                     <!--end of col-->
                 </div>
             </form>
-            @if (session()->has('eventSearchResults'))
+            @if (session('eventSearchResults'))
                 <div class="mt-4">
                     <h2 class="text-lg font-semibold mb-2">Evénement cherché:</h2>
                     <ul>

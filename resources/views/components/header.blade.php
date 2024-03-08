@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
     <!-- My CSS -->
     <link rel="stylesheet" href="/assets/css/style.css" />
+    <!-- My SCSS -->
+    <link rel="stylesheet" href="/assets/css/button.scss" />
 
     <title>Dashboard {{ Auth::user()->role }}</title>
 </head>

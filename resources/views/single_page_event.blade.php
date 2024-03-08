@@ -1,5 +1,4 @@
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-
+<x-header />
 <main class="mt-10">
 
     <div class="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative" style="height: 24em;">
@@ -77,6 +76,13 @@
         <input type="hidden" name="client_id" value="{{ Auth::user()->id }}">
         <input type="hidden" name="status" value="Available">
         <input type="hidden" name="event_id" value="{{ $events->id }}">
+        <button type="submit"
+            class='flex justify-center max-w-sm w-full bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-2xl uppercase font-bold shadow-md rounded-full mx-auto p-5'>
+            Button name
+        </button>
     </form>
 
 </main>
+</body>
+
+</html>

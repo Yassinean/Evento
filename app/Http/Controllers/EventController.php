@@ -33,7 +33,7 @@ class EventController extends Controller
         return redirect()->back();
     }
 
-    public function update(EventRequest $request, $event)
+    public function update(EventRequest $request, Event $id)
     {
         $validatedData = $request->validated();
         dd($request->file('nimage'));
@@ -44,7 +44,7 @@ class EventController extends Controller
         } else {
             $imageName = null;
         }
-        $event->update([
+        $id->update([
             'image' => $validatedData['nimage'],
             'name' => $validatedData['nname'],
             'description' => $validatedData['ndescription'],

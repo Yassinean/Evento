@@ -8,8 +8,5 @@ use App\Models\User;
 
 class OrganisateurController extends Controller
 {
-    public function users(){
-        $users = User::get();
-        return view('organisateur.users' , compact('users'));
-    }
+    
 }
