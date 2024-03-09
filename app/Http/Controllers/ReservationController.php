@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Visiteur;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -13,9 +14,12 @@ class ReservationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($eventId)
     {
-        //
+        $event = Event::findOrFail($eventId);
+        // dd($event);
+        $reservations = $event->reservation()->with('client')->get();
+        return view('ticket', compact('event', 'reservations'));
     }
 
     /**
@@ -23,25 +27,26 @@ class ReservationController extends Controller
      */
     public function create(ReservationRequest $request, $eventId)
     {
-        $validatedData = $request->validated();
-
-        $client = Visiteur::where('user_id',  Auth::id())->first();
-        Reservation::create([
-            'event_id' => $eventId,
-            'client_id' => $client->id,
-            'status' => $validatedData['status'],
-        ]);
-
-        return redirect()->route('ticket');
     }
 
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ReservationRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $visiteur = Visiteur::where('id', Auth::id())->first();
+        dd($visiteur);
+
+        Reservation::create([
+            'user_id' => $validatedData['client_id'],
+            'events_id' => $validatedData['events_id'],
+            'status' => $validatedData['status'],
+        ]);
+
+        return redirect()->back();
     }
 
     /**

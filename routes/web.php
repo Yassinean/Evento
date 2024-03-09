@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisiteurController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\OrganisateurController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\auth\AuthenticatedSessionController;
@@ -57,6 +58,8 @@ Route::get('search', [VisiteurController::class, 'search'])->name('searchname');
 Route::get('/filter', [VisiteurController::class, 'index'])->name('filtername');
 Route::middleware(['auth', 'CheckRole:visiteur'])->group(function () {
     Route::get('/event/{id}', [VisiteurController::class, 'detailEvent'])->name('singleEvent');
+    Route::get('/event/reservation/ticket/{eventId}', [ReservationController::class, 'index'])->name('ticket');
+    Route::post('/event/reservation/{id}', [ReservationController::class, 'store'])->name('createreservation');
 });
 /**** end visiteur routing ****/
 /**** admin routing ****/
