@@ -52,6 +52,7 @@ class EventController extends Controller
             'description' => $validatedData['description'],
             'localisation' => $validatedData['localisation'],
             'date' => $validatedData['date'],
+            'acceptation' => $validatedData['acceptation'],
             'capacity' => $validatedData['capacity'],
             'categorie_id' => $validatedData['categorie_id'],
         ]);

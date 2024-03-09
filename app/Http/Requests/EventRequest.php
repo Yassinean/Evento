@@ -28,6 +28,8 @@ class EventRequest extends FormRequest
             'description' => 'required|string',
             'localisation' => 'required|string|max:255',
             'date' => 'required|date',
+            
+            'acceptation' => 'required',
 
             'capacity' => 'required|integer|max:255',
             'categorie_id' => 'required|exists:categories,id',

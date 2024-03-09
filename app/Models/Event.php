@@ -17,6 +17,7 @@ class Event extends Model
         'date',
         'capacity',
         'status',
+        'acceptation',
         'categorie_id',
         'organisateur_id',
     ];
