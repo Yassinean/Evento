@@ -58,8 +58,8 @@ Route::get('search', [VisiteurController::class, 'search'])->name('searchname');
 Route::get('/filter', [VisiteurController::class, 'index'])->name('filtername');
 Route::middleware(['auth', 'CheckRole:visiteur'])->group(function () {
     Route::get('/event/{id}', [VisiteurController::class, 'detailEvent'])->name('singleEvent');
-    Route::get('/event/reservation/ticket/{eventId}', [ReservationController::class, 'index'])->name('ticket');
-    Route::post('/event/reservation/{id}', [ReservationController::class, 'store'])->name('createreservation');
+    Route::post('/event/reservation/ticket/{id}', [ReservationController::class, 'index'])->name('ticket');
+    Route::post('/event/reservation', [ReservationController::class, 'store'])->name('createreservation');
 });
 /**** end visiteur routing ****/
 /**** admin routing ****/
@@ -70,6 +70,7 @@ Route::middleware(['auth', CheckRole::class . ':admin'])->group(function () {
     Route::put('/admin/updatecategory/{id}', [CategorieController::class, 'update'])->name('updatecategory');
     Route::delete('/admin/deletecategory/{id}', [CategorieController::class, 'destroy'])->name('deletecategory');
     Route::put('/admin/dashboard/{event}', [EventController::class, 'updateStatus'])->name('events.update');
+    Route::put('/admin/users/{user}', [AdminController::class, 'updateStatus'])->name('users.update');
 });
 /**** end admin routing ****/
 

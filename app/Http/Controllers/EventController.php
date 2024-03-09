@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Models\Categorie;
+use App\Models\Organisateur;
 use Illuminate\Http\Request;
+use App\Http\Requests\EventRequest;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::all();
+
+        $organizerQuery = Organisateur::where('user_id', Auth::id())->first();
+        $organizerId = $organizerQuery ? $organizerQuery->id : null;
+        $evntcount = Event::withCount('reservation');
+        $events = Event::where('organisateur_id', $organizerId)->with('organisateur')->get();
         $categories = Categorie::all();
-        return view('organisateur.dashboard', compact('events', 'categories'));
+        return view('organisateur.dashboard', compact('events', 'categories', 'organizerId', 'evntcount'));
     }
 
     public function store(EventRequest $request)
@@ -35,23 +41,19 @@ class EventController extends Controller
 
     public function update(EventRequest $request, Event $id)
     {
+        dd($request);
         $validatedData = $request->validated();
-        dd($request->file('nimage'));
-        if ($request->hasFile('nimage')) {
-            $image = $request->file('nimage');
-            $imageName = time() . '.' . $image->extension();
-            $image->move(public_path('public/images'), $imageName);
-        } else {
-            $imageName = null;
-        }
+        $image = $request->file('nimage');
+        $imageName = time() . '.' . $image->extension();
+        $image->storeAs('public/images', $imageName);
         $id->update([
-            'image' => $validatedData['nimage'],
-            'name' => $validatedData['nname'],
-            'description' => $validatedData['ndescription'],
-            'localisation' => $validatedData['nlocalisation'],
-            'date' => $validatedData['ndate'],
-            'capacity' => $validatedData['ncapacity'],
-            'categorie_id' => $validatedData['ncategorie_id'],
+            'image' => $imageName,
+            'name' => $validatedData['name'],
+            'description' => $validatedData['description'],
+            'localisation' => $validatedData['localisation'],
+            'date' => $validatedData['date'],
+            'capacity' => $validatedData['capacity'],
+            'categorie_id' => $validatedData['categorie_id'],
         ]);
         // dd($event);
         return redirect()->back();
@@ -59,10 +61,7 @@ class EventController extends Controller
 
     public function updateStatus(Request $request, Event $event)
     {
-        // Check if user has permission to update event status (you can customize this logic based on your requirements)
-
-        $event->update(['status' => !$event->status]); // Toggle the status (assuming it's a boolean field)
-        // dd($event);
+        $event->update(['status' => !$event->status]);
         return redirect()->back()->with('success', 'Event status updated successfully');
     }
 

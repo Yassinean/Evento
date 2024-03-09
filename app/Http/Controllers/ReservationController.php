@@ -17,8 +17,8 @@ class ReservationController extends Controller
     public function index($eventId)
     {
         $event = Event::findOrFail($eventId);
-        // dd($event);
-        $reservations = $event->reservation()->with('client')->get();
+        $reservations = $event->reservation()->with('visiteurs')->get();
+        // dd($reservations);
         return view('ticket', compact('event', 'reservations'));
     }
 
@@ -36,15 +36,15 @@ class ReservationController extends Controller
     public function store(ReservationRequest $request)
     {
         $validatedData = $request->validated();
-
         $visiteur = Visiteur::where('id', Auth::id())->first();
-        dd($visiteur);
 
-        Reservation::create([
+        $reservation = Reservation::create([
             'user_id' => $validatedData['client_id'],
-            'events_id' => $validatedData['events_id'],
+            'event_id' => $validatedData['event_id'],
             'status' => $validatedData['status'],
         ]);
+        dd($reservation);
+        // dd($reservation);
 
         return redirect()->back();
     }

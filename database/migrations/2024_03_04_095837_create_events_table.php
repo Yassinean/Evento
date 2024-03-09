@@ -20,7 +20,8 @@ return new class extends Migration
             $table->date('date');
             $table->integer('capacity');
             $table->boolean('status')->default(false);
-            $table->foreignId('categorie_id')->nullable()->constrained('categories');
+            $table->enum('acceptation' , ['automatique' , 'manuel']);
+            $table->foreignId('categorie_id')->nullable()->constrained('categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('organisateur_id')->constrained('organisateurs');
             $table->timestamps();
         });

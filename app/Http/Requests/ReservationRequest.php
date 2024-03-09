@@ -22,7 +22,7 @@ class ReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'events_id' => '',
+            'event_id' => '',
             'client_id' => '',
             'status' => ''
         ];

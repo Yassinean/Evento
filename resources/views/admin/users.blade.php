@@ -70,17 +70,21 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->role }}</td>
                                 <td>
-                                    <button
-                                        class="{{ $user->status ? 'completed bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 dark:text-white hover:border-green-600 hover:bg-green-500 shadow-md py-2 px-6 inline-flex items-center' : 'not-completed bg-white text-gray-800 font-bold rounded border-b-2 border-yellow-500 hover:border-yellow-600 dark:text-white hover:bg-yellow-500 shadow-md py-2 px-6 inline-flex items-center' }}">
-                                    </button>
-                                    <form action="" method="POST">
+
+                                    <form action="{{ route('users.update', $user->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <input type="hidden" name="status" value="{{ $user->id }}">
-                                        <button type="submit" class="status-toggle-btn">
-                                            {{ $user->status ? 'Blocked' : 'Unblocked' }}
+                                        @if ($user->status == 'unblocked')
+                                            <input type="hidden" name="status" value="blocked">
+                                        @else
+                                            <input type="hidden" name="status" value="unblocked">
+                                        @endif
+                                        <button type="submit"
+                                            class="{{ $user->status == 'unblocked' ? 'bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 shadow-md py-2 px-6 inline-flex items-center' : 'bg-white text-gray-800 font-bold rounded border-b-2 border-yellow-500 hover:border-yellow-600 hover:bg-yellow-500 shadow-md py-2 px-6 inline-flex items-center' }}">
+                                            {{ $user->status == 'unblocked' ? 'Block' : 'Unblock' }}
                                         </button>
                                     </form>
+
                                 </td>
                             </tr>
                         @endforeach

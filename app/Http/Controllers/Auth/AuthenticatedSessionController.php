@@ -32,6 +32,9 @@ class AuthenticatedSessionController extends Controller
         if (Auth::user()->role === 'admin') {
             return redirect()->route('admin.dashboard');
         } elseif (Auth::user()->role === 'organisateur') {
+            if(Auth::user()->status === 'blocked'){
+                return abort(401);
+            }
             return redirect()->route('organisateur.dashboard');
         } elseif (Auth::user()->role === 'visiteur') {
             return redirect('/');

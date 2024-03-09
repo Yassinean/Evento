@@ -13,7 +13,7 @@
 <body>
     <div class="ticket created-by-anniedotexe">
         <div class="left">
-            <div class="image">
+            <div class="image" style="background-image: {{asset('images/' . $event->image) }};">
                 <p class="admit-one">
                     <span>ADMIT ONE</span>
                     <span>ADMIT ONE</span>
@@ -30,14 +30,14 @@
                     <span class="june-29">{{ $event->date }}</span>
                 </p>
                 <div class="show-name">
-                    <h1>SOUR Prom</h1>
-                    <h2>Olivia Rodrigo</h2>
+                    <h1>{{ $event->name }}</h1>
+                    {{-- <h2>{{ $event->visiteur }}</h2> --}}
                 </div>
                 <div class="time">
                     <p>8:00 PM <span>TO</span> 11:00 PM</p>
                     <p>DOORS <span>@</span> 7:00 PM</p>
                 </div>
-                <p class="location"><span>East High School</span>
+                <p class="location"><span>{{ $event->localisation }}</span>
                     <span class="separator"><i class="far fa-smile"></i></span><span>Salt Lake City, Utah</span>
                 </p>
             </div>

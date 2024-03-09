@@ -34,12 +34,15 @@ class AdminController extends Controller
         return view('admin.users', compact('users'));
     }
 
-    public function updateStatus(Request $request, User $usr)
+    public function updateStatus(Request $request, User $user)
     {
-        $usr->update(['status' => !$usr->status]);
-        // dd($usr);
-        return redirect()->back()->with('success', 'Event status updated successfully');
+        $newStatus = $request->input('status');
+        $user->status = $newStatus;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User status updated successfully.');
     }
+
     /**
      * Show the form for creating a new resource.
      */

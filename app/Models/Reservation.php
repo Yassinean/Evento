@@ -10,16 +10,18 @@ class Reservation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'events_id',
+        'event_id
+',
         'user_id',
         'status',
     ];
 
-    public function events(){
+    public function events()
+    {
         return $this->belongsTo(Event::class);
     }
-    
-    public function visiteur()
+
+    public function visiteurs()
     {
         return $this->belongsTo(Visiteur::class, 'visiteur_id');
     }

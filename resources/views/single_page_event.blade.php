@@ -24,7 +24,8 @@
 
     <div class="mx-auto px-4 lg:px-0 mt-12 text-gray-700 max-w-screen-md vismx-auto text-lg leading-relaxed">
         <h2 class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">Nombre de place :
-            {{ $events->capacity }}</h2>
+            {{ $events->capacity }}
+        </h2>
         <div class="flex justify-between">
             <div>
                 <h2 class="text-2xl text-gray-800 font-semibold mb-4 mt-4">
@@ -71,20 +72,24 @@
             <p class="pb-6">{{ $events->description }}</p>
         </div>
     </div>
-    <form method="post" action="{{ route('createreservation', ['id' => $events->id]) }}">
+    {{-- @dd($events->id) --}}
+    <form method="post" action="{{ route('createreservation') }}">
         @csrf
         @method('post')
         <input type="hidden" name="client_id" value="{{ Auth::user()->id }}">
         <input type="hidden" name="status" value="{{ $events->status }}">
-        <input type="hidden" name="events_id" value="{{ $events->id }}">
+        <input type="hidden" name="event_id" value="{{ $events->id }}">
         <button type="submit"
             class='flex justify-center max-w-sm w-full bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-2xl uppercase font-bold shadow-md rounded-full mx-auto p-5'>
-            Button name
+            Reserver Maintenant
         </button>
     </form>
-
-
-
+    @if ($reservations)
+        <form action="{{ route('ticket', ['id' => $events->id]) }}" method="post">
+            @csrf
+            <button>Get Ticket</button>
+        </form>
+    @endif
 </main>
 </body>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Event;
 use App\Models\Categorie;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class VisiteurController extends Controller
@@ -31,8 +32,9 @@ class VisiteurController extends Controller
     public function detailEvent($id)
     {
         $events = Event::find($id);
+        $reservations = Reservation::all();
         // dd($events);
-        return view('single_page_event', compact('events'));
+        return view('single_page_event', compact('events', 'reservations'));
     }
 
     public function search(Request $request)

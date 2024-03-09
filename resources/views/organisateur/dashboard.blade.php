@@ -4,7 +4,6 @@
 <!-- SIDEBAR -->
 
 
-
 <!-- CONTENT -->
 <section id="content">
     <!-- NAVBAR -->
@@ -72,10 +71,8 @@
                             <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
                                 action="{{ route('createevent') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ajouter un événement
-                                </h3>
-                                <input type="hidden" name="organisateur_id"
-                                    value="{{ Auth::user()->organisateur->id }}">
+                                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ajouter un événement</h3>
+                                <input type="hidden" name="organisateur_id" value="{{ $organizerId }}">
                                 <div>
                                     <input type="file" name="image" id="event"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
@@ -121,6 +118,39 @@
                                         required="">
                                 </div>
                                 <div>
+                                    <label for="cap"
+                                        class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Acceptation:
+                                    </label>
+                                    <div class="flex justify-evenly">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="bg-white dark:bg-gray-100 rounded-full w-4 h-4 flex flex-shrink-0 justify-center items-center relative">
+                                                <input aria-labelledby="label1" checked type="radio"
+                                                    name="acceptation" value="manuel"
+                                                    class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:outline-none border rounded-full border-gray-400 absolute cursor-pointer w-full h-full checked:border-none" />
+                                                <div
+                                                    class="check-icon hidden border-4 border-indigo-700 rounded-full w-full h-full z-1">
+                                                </div>
+                                            </div>
+                                            <label id="label1"
+                                                class="ml-2 text-sm leading-4 font-normal text-gray-800 dark:text-gray-100">Manuel</label>
+                                        </div>
+                                        <div class="flex items-center ml-6">
+                                            <div
+                                                class="bg-white dark:bg-gray-100 rounded-full w-4 h-4 flex flex-shrink-0 justify-center items-center relative">
+                                                <input aria-labelledby="label2" type="radio" name="acceptation"
+                                                    value="automatique"
+                                                    class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:outline-none border rounded-full border-gray-400 absolute cursor-pointer w-full h-full checked:border-none" />
+                                                <div
+                                                    class="check-icon hidden border-4 border-indigo-700 rounded-full w-full h-full z-1">
+                                                </div>
+                                            </div>
+                                            <label id="label2"
+                                                class="ml-2 text-sm leading-4 font-normal text-gray-800 dark:text-gray-100">Automatique</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
                                     <label for="event"
                                         class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Categorie
                                         d'événement</label>
@@ -150,8 +180,8 @@
             <li>
                 <i class='bx bxs-calendar-check'></i>
                 <span class="text">
-                    <h3>1020</h3>
-                    <p>Nombre d 'événement</p>
+                    <h3></h3>
+                    <p>Nombre d'événement</p>
                 </span>
             </li>
             <li>
@@ -203,7 +233,8 @@
                                 <td>{{ $event->capacity }}</td>
                                 <td>{{ $event->categorie->name }}</td>
                                 <td>
-                                    <button data-modal-toggle="authentication-modal-1" type="button"
+                                    <button data-modal-toggle="authentication-modal-1{{ $event->id }}"
+                                        type="button"
                                         class="inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -212,7 +243,7 @@
                                         </svg>
 
                                     </button>
-                                    <div id="authentication-modal-1" aria-hidden="true"
+                                    <div id="authentication-modal-1{{ $event->id }}" aria-hidden="true"
                                         class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
                                         <div class="relative w-full max-w-md px-4 h-full md:h-auto">
                                             <!-- Modal content -->
@@ -220,7 +251,7 @@
                                                 <div class="flex justify-end p-2">
                                                     <button type="button"
                                                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                                                        data-modal-toggle="authentication-modal-1">
+                                                        data-modal-toggle="authentication-modal-1{{ $event->id }}">
                                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                                             xmlns="http://www.w3.org/2000/svg">
                                                             <path fill-rule="evenodd"
@@ -245,53 +276,52 @@
 
                                                     <div>
                                                         <label for="event"
-                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Modifier
-                                                            Titre
-                                                            d'événement</label>
+                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
+                                                            Modifier Titre d'événement</label>
                                                         <input type="text" name="nname" id="event"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                             required="" value="{{ $event->name }}">
                                                     </div>
                                                     <div>
                                                         <label for="desc"
-                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Modifer
-                                                            Description
-                                                            d'événement</label>
+                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
+                                                            Modifer Description d'événement</label>
                                                         <input type="text" name="ndescription" id="desc"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                             required="" value="{{ $event->description }}">
                                                     </div>
                                                     <div>
                                                         <label for="loc"
-                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Modifier
-                                                            Localisation
-                                                            d'événement</label>
+                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
+                                                            Modifier Localisation d'événement
+                                                        </label>
                                                         <input type="text" name="nlocalisation" id="loc"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                             required="" value="{{ $event->localisation }}">
                                                     </div>
                                                     <div>
                                                         <label for="date"
-                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Modifier
-                                                            Date
-                                                            d'événement</label>
+                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
+                                                            Modifier Date d'événement
+                                                        </label>
                                                         <input type="date" name="ndate" id="date"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                             required="" value="{{ $event->date }}">
                                                     </div>
                                                     <div>
                                                         <label for="cap"
-                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Modifier
-                                                            Capacité
-                                                            d'événement</label>
+                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
+                                                            Modifier Capacité d'événement
+                                                        </label>
                                                         <input type="number" name="ncapacity" id="cap"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                             required="" value="{{ $event->capacity }}">
                                                     </div>
                                                     <div>
                                                         <label for="event"
-                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Categorie
-                                                            d'événement</label>
+                                                            class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
+                                                            Categorie d'événement
+                                                        </label>
                                                         <select name="ncategorie_id" id="">
                                                             @foreach ($categories as $categorie)
                                                                 <option value="{{ $categorie->id }}">

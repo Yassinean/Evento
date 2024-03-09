@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 return new class extends Migration
 {
     /**
@@ -12,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('events_id')->nullable()->constrained('events');
+            $table->foreignId('event_id')->nullable()->constrained('events');
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->enum('status', ['Booked', 'Available'])->default('Available');
             $table->timestamps();
