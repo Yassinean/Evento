@@ -35,18 +35,32 @@ class ReservationController extends Controller
      */
     public function store(ReservationRequest $request)
     {
-        $validatedData = $request->validated();
-        $visiteur = Visiteur::where('id', Auth::id())->first();
-
-        $reservation = Reservation::create([
-            'user_id' => $validatedData['client_id'],
-            'event_id' => $validatedData['event_id'],
-            'status' => $validatedData['status'],
-        ]);
-        dd($reservation);
+        $event = Event::findOrFail($request->id);
+        if ($request->acceptation == "automatique") {
+            $validatedData = $request->validated();
+            // $visiteur = Visiteur::where('id', Auth::id())->first();
+            $reservation = Reservation::create([
+                'user_id' => $validatedData['client_id'],
+                'event_id' => $validatedData['event_id'],
+                'status' => "accepter",
+            ]);
+            // dd($reservation);
+            $event->capacity--;
+            $event->save();
+            return redirect()->back()->with("success", "Votre reservation est reservée");
+        } elseif ($request->acceptation == "manuel") {
+            $validatedData = $request->validated();
+            // $visiteur = Visiteur::where('id', Auth::id())->first();
+            $reservation = Reservation::create([
+                'user_id' => $validatedData['client_id'],
+                'event_id' => $validatedData['event_id'],
+                'status' => "en cour",
+            ]);
+            // dd($reservation);
+            return redirect()->back()->with("success", "Votre reservation est en cours");
+        }
         // dd($reservation);
 
-        return redirect()->back();
     }
 
     /**

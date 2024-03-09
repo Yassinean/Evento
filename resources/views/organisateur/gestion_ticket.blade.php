@@ -4,13 +4,12 @@
 <!-- SIDEBAR -->
 
 
-
 <!-- CONTENT -->
 <section id="content">
     <!-- NAVBAR -->
     <nav>
         <i class='bx bx-menu'></i>
-        <a href="#" class="nav-link">Users</a>
+        <a href="#" class="nav-link">Categories</a>
         <form action="#">
             <div class="form-input">
                 <input type="search" placeholder="Search...">
@@ -36,55 +35,49 @@
                 <h1>Dashboard</h1>
                 <ul class="breadcrumb">
                     <li>
-                        <a href="{{ URL('admin/dashboard') }}">Dashboard</a>
+                        <a href="#">Dashboard</a>
                     </li>
                     <li><i class='bx bx-chevron-right'></i></li>
                     <li>
-                        <a class="active" href="#">Users</a>
+                        <a class="active" href="#">Home</a>
                     </li>
                 </ul>
             </div>
         </div>
 
+
         <div class="table-data">
             <div class="order">
                 <div class="head">
-                    <h3>Evénement</h3>
+                    <h3>reservations</h3>
                     <i class='bx bx-search'></i>
                     <i class='bx bx-filter'></i>
                 </div>
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>role</th>
+                            <th>Cients</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach ($users as $user)
+                        @foreach ($reservations as $reservation)
                             <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->role }}</td>
+                                <td>{{ $reservation->visiteurs->user->name }}</td>
                                 <td>
-
-                                    <form action="{{ route('users.update', $user->id) }}" method="POST">
+                                    {{-- <form action="{{ route('deleteevent', $event->id) }}" method="POST">
                                         @csrf
-                                        @method('PUT')
-                                        @if ($user->status == 'unblocked')
-                                            <input type="hidden" name="status" value="blocked">
-                                        @else
-                                            <input type="hidden" name="status" value="unblocked">
-                                        @endif
-                                        <button type="submit"
-                                            class="{{ $user->status == 'unblocked' ? 'bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 shadow-md py-2 px-6 inline-flex items-center' : 'bg-white text-gray-800 font-bold rounded border-b-2 border-yellow-500 hover:border-yellow-600 hover:bg-yellow-500 shadow-md py-2 px-6 inline-flex items-center' }}">
-                                            {{ $user->status == 'unblocked' ? 'Block' : 'Unblock' }}
+                                        @method('DELETE')
+                                        <button
+                                            class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
                                         </button>
-                                    </form>
-
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach

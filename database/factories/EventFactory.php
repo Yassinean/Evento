@@ -24,6 +24,7 @@ class EventFactory extends Factory
             'date' => $this->faker->dateTimeBetween('+1 week', '+1 year'),
             'capacity' => $this->faker->numberBetween(50, 500),
             'categorie_id' => $this->faker->numberBetween(1 , 4), // Assuming you have at least 10 categories
+            'acceptation' => $this->faker->optional('automatique','manuel'), // Assuming you have at least 10 categories
             'organisateur_id' => $this->faker->numberBetween(1,3), // Assuming you have at least 5 organisers
         ];
     }

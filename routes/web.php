@@ -46,6 +46,7 @@ Route::get('auth/google/callback', [SocialLoginController::class, 'callback'])->
 
 /**** organisateur routing ****/
 Route::middleware(['auth', 'CheckRole:organisateur'])->group(function () {
+    Route::get('/organisateur/gestion_ticket', [OrganisateurController::class, 'ticket'])->name('organisateur.gestion_ticket');
     Route::get('/organisateur/dashboard', [EventController::class, 'index'])->name('organisateur.dashboard');
     Route::post('/organisateur/dashboard/createEvent', [EventController::class, 'store'])->name('createevent');
     Route::delete('/organisateur/dashboard/{id}', [EventController::class, 'destroy'])->name('deleteevent');
@@ -59,7 +60,7 @@ Route::get('/filter', [VisiteurController::class, 'index'])->name('filtername');
 Route::middleware(['auth', 'CheckRole:visiteur'])->group(function () {
     Route::get('/event/{id}', [VisiteurController::class, 'detailEvent'])->name('singleEvent');
     Route::post('/event/reservation/ticket/{id}', [ReservationController::class, 'index'])->name('ticket');
-    Route::post('/event/reservation', [ReservationController::class, 'store'])->name('createreservation');
+    Route::post('/event/reservation/{id}', [ReservationController::class, 'store'])->name('createreservation');
 });
 /**** end visiteur routing ****/
 /**** admin routing ****/

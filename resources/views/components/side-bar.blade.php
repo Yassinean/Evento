@@ -25,6 +25,12 @@
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
+                <li class="active">
+                    <a href="{{ URL('organisateur/gestion_ticket') }}">
+                        <i class='bx bxs-dashboard'></i>
+                        <span class="text">Réservations</span>
+                    </a>
+                </li>
             @endif
         </ul>
         <ul class="side-menu">

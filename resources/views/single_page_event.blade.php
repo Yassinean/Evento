@@ -73,11 +73,10 @@
         </div>
     </div>
     {{-- @dd($events->id) --}}
-    <form method="post" action="{{ route('createreservation') }}">
+    <form method="post" action="{{ route('createreservation', $events->id) }}">
         @csrf
-        @method('post')
         <input type="hidden" name="client_id" value="{{ Auth::user()->id }}">
-        <input type="hidden" name="status" value="{{ $events->status }}">
+        <input type="hidden" name="acceptation" value="{{ $events->acceptation }}">
         <input type="hidden" name="event_id" value="{{ $events->id }}">
         <button type="submit"
             class='flex justify-center max-w-sm w-full bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-2xl uppercase font-bold shadow-md rounded-full mx-auto p-5'>

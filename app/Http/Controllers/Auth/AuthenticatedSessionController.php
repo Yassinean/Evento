@@ -37,6 +37,9 @@ class AuthenticatedSessionController extends Controller
             }
             return redirect()->route('organisateur.dashboard');
         } elseif (Auth::user()->role === 'visiteur') {
+            if(Auth::user()->status === 'blocked'){
+                return abort(401);
+            }
             return redirect('/');
         }
         return redirect()->intended(RouteServiceProvider::HOME);
