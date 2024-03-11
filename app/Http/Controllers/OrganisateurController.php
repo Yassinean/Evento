@@ -14,26 +14,34 @@ class OrganisateurController extends Controller
 {
     public function acceptation(Request $request)
     {
-        $organisateur = Auth::user()->id;
-        $idOrganisateur = Organisateur::where('user_id', $organisateur)->first();
-        $reservations = Reservation::with('visiteurs.users', 'event.organisateur')
-            ->where('status', 'en cour')->get();
-        // dd($reservations);
-        return view('organisateur.gestion_ticket', compact('reservations'));
+        $user_id = Auth::id();
+        $organisateur = Organisateur::where('user_id', $user_id)->first();
+        $events = $organisateur->event()->get();
+        return view('organisateur.gestion_ticket', compact('events'));
     }
 
-    public function acceptReservation(Request $request, $eventReservation)
+    public function acceptReservation($eventReservation)
     {
-        $reservation = Reservation::findOrFail($eventReservation);
-        $reservation->update([
-            'status' => $request->status,
-        ]);
-        return redirect()->back();
+        $reservation = Reservation::find($eventReservation);
+        // dd($reservation);
+        if ($reservation) {
+            $event = $reservation->event;
+            if ($event->capacity > 0) {
+                $reservation->update([
+                    'status' => 'accepter',
+                ]);
+                $event->capacity--;
+                $event->save();
+                return redirect()->back()->with('success', 'Vous avez accepter la reservation avec succès ');
+            }else{
+                return redirect()->back()->with('success', 'Tous les places sont reservées ');
+            }
+        }
     }
     public function deleteReservation($eventReservation)
     {
         $reservation = Reservation::findOrFail($eventReservation);
         $reservation->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Vous avez refuser la reservation');
     }
 }

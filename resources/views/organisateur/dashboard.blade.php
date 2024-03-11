@@ -201,6 +201,13 @@
                     <i class='bx bx-search'></i>
                     <i class='bx bx-filter'></i>
                 </div>
+                @if (session('success'))
+                    <div class=" p-4 my-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                        role="alert" id="successMessage">
+                        <strong class="font-bold">Success!</strong>
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                    </div>
+                @endif
                 <table>
                     <thead>
                         <tr>
@@ -238,9 +245,10 @@
                                     </button>
                                     <div id="authentication-modal-1{{ $event->id }}" aria-hidden="true"
                                         class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
-                                        <div class="relative w-full max-w-md px-4 h-full md:h-auto">
+                                        <div class="relative w-full max-w-lg px-4 h-full md:h-auto">
                                             <!-- Modal content -->
-                                            <div class="bg-white rounded-lg shadow relative mt-72 dark:bg-gray-700">
+                                            <div
+                                                class="bg-white rounded-lg shadow relative mt-72 dark:bg-gray-700 p-4">
                                                 <div class="flex justify-end p-2">
                                                     <button type="button"
                                                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
@@ -299,6 +307,8 @@
                                                         <input type="date" name="ndate" id="date"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                                             required="" value="{{ $event->date }}">
+                                                        <x-input-error :messages="$errors->get('ndate')" class="mt-2" />
+
                                                     </div>
                                                     <div>
                                                         <label for="cap"

@@ -90,8 +90,7 @@
                                                         <!-- Logout Form -->
                                                         <form method="POST" action="{{ route('logout') }}">
                                                             @csrf
-                                                            <button type="submit"
-                                                                class="font-semibold text-gray-600 hover:text-gray-900">Logout</button>
+                                                            <button type="submit" class="btn">Logout</button>
                                                         </form>
                                                     @endif
                                                 @else
@@ -108,9 +107,6 @@
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
-                            <div class="button">
-                                <a href="pricing.html" class="btn">Get Tickets<i class="lni lni-ticket"></i></a>
-                            </div>
                         </nav>
                         <!-- End Navbar -->
                     </div>
@@ -254,6 +250,7 @@
                     </ul>
                 </div>
             @endif
+            {{-- Categorie div --}}
             <div class="d-flex justify-content-evenly gap-2">
                 @foreach ($categories as $cat)
                     <form action=" {{ route('filtername') }}" method="get">
@@ -265,6 +262,7 @@
                     </form>
                 @endforeach
             </div>
+            {{-- events div --}}
             <div class="row">
                 <div class="container py-2">
                     <div class="h1 text-center text-dark" id="pageHeaderTitle">Events</div>

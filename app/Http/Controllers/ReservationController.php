@@ -17,7 +17,7 @@ class ReservationController extends Controller
     public function index($eventId)
     {
         $event = Event::findOrFail($eventId);
-        $reservations = $event->reservation()->with('visiteurs')->get();
+        $reservations = $event->reservations()->with('visiteurs')->get();
         // dd($reservations);
         return view('ticket', compact('event', 'reservations'));
     }
@@ -36,18 +36,23 @@ class ReservationController extends Controller
     public function store(ReservationRequest $request)
     {
         $event = Event::findOrFail($request->id);
+        // dd($event->status);
         if ($request->acceptation == "automatique") {
-            $validatedData = $request->validated();
-            // $visiteur = Visiteur::where('id', Auth::id())->first();
-            $reservation = Reservation::create([
-                'user_id' => $validatedData['client_id'],
-                'event_id' => $validatedData['event_id'],
-                'status' => "accepter",
-            ]);
-            // dd($reservation);
-            $event->capacity--;
-            $event->save();
-            return redirect()->back()->with("success", "Votre reservation est reservée");
+            if ($event->capacity > 0) {
+                $validatedData = $request->validated();
+                // $visiteur = Visiteur::where('id', Auth::id())->first();
+                $reservation = Reservation::create([
+                    'user_id' => $validatedData['client_id'],
+                    'event_id' => $validatedData['event_id'],
+                    'status' => "accepter",
+                ]);
+                // dd($reservation);
+                $event->capacity--;
+                $event->save();
+                return redirect()->back()->with("success", "Votre reservation est reservée");
+            } else {
+                return redirect()->back()->with("success", "Tous les places sont reservées");
+            }
         } elseif ($request->acceptation == "manuel") {
             $validatedData = $request->validated();
             // $visiteur = Visiteur::where('id', Auth::id())->first();

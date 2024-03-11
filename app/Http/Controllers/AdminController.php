@@ -9,6 +9,7 @@ use App\Models\Visiteur;
 use App\Models\Categorie;
 use App\Models\Organisateur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AdminController extends Controller
 {
@@ -20,7 +21,10 @@ class AdminController extends Controller
         $visiteurCount = Visiteur::count();
         $organisateurCount = Organisateur::count();
         $categoriecount = Categorie::count();
-        $categories = Categorie::paginate(5);
+        $categories = Cache::remember('categories', now()->addHours(24), function () {
+            return Categorie::paginate(5);
+        });
+        Cache::forget('categories');
         $eventCount = Event::count();
         $events = Event::paginate(10);
         return view('admin.dashboard', compact('categories', 'visiteurCount', 'categoriecount', 'events', 'organisateurCount', 'eventCount'));
@@ -40,7 +44,7 @@ class AdminController extends Controller
         $user->status = $newStatus;
         $user->save();
 
-        return redirect()->back()->with('success', 'User status updated successfully.');
+        return redirect()->back()->with('success', 'User status modifié avec succès.');
     }
 
     /**

@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="/assets/css/style.css" />
     <!-- My SCSS -->
     <link rel="stylesheet" href="/assets/css/button.scss" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/LineIcons.3.0.css" />
+    <link rel="stylesheet" href="/assets/css/animate.css" />
+    <link rel="stylesheet" href="/assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="/assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
 
     <title>Dashboard {{ Auth::user()->role }}</title>
 </head>

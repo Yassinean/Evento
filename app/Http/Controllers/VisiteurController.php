@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\Event;
 use App\Models\Categorie;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class VisiteurController extends Controller
 {
@@ -31,10 +32,22 @@ class VisiteurController extends Controller
 
     public function detailEvent($id)
     {
-        $events = Event::find($id);
-        $reservations = Reservation::all();
+        $events = Event::with('organisateur', 'organisateur.user')->where('id', $id)
+            ->first();
+        if ($events->status) {
+            $result = $events->reservations()->where('user_id', Auth::id())->where('status', 'accepter')->exists();
+            // dd($result);
+            $reservations = Reservation::all();
+            return view('single_page_event', compact('events', 'reservations' , 'result'));
+            // return view('single_page_event', compact('events'));
+        } else {
+            return  abort('404');
+        }
+        // dd($id);
+        // $events = Event::find($id);
+        // if ($events->status = 1)
+        // else return abort('404');
         // dd($events);
-        return view('single_page_event', compact('events', 'reservations'));
     }
 
     public function search(Request $request)
@@ -42,7 +55,8 @@ class VisiteurController extends Controller
         $searchQuery = $request->input('search');
         $eventSearchResults = [];
         if ($searchQuery) {
-            $eventSearchResults = Event::where('name', 'like', '%' . $searchQuery . '%')->get();
+            $eventSearchResults = Event::where('name', 'like', '%' . $searchQuery . '%')
+                ->where('status', 1)->get();
         }
         // dd($eventSearchResults);
         return redirect()->back()->with('eventSearchResults', $eventSearchResults);

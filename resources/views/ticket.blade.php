@@ -13,7 +13,8 @@
 <body>
     <div class="ticket created-by-anniedotexe">
         <div class="left">
-            <div class="image" style="background-image: {{asset('images/' . $event->image) }};">
+            <div class="image"
+                style="background-image: url('{{ asset('images/' . $event->image) }}');background-repeat:no-repeat;">
                 <p class="admit-one">
                     <span>ADMIT ONE</span>
                     <span>ADMIT ONE</span>
@@ -31,7 +32,7 @@
                 </p>
                 <div class="show-name">
                     <h1>{{ $event->name }}</h1>
-                    {{-- <h2>{{ $event->visiteur }}</h2> --}}
+                    <h2>{{ Auth::user()->name }}</h2>
                 </div>
                 <div class="time">
                     <p>8:00 PM <span>TO</span> 11:00 PM</p>
@@ -50,7 +51,7 @@
             </p>
             <div class="right-info-container">
                 <div class="show-name">
-                    <h1>SOUR Prom</h1>
+                    <h1>{{ $event->name }}</h1>
                 </div>
                 <div class="time">
                     <p>8:00 PM <span>TO</span> 11:00 PM</p>

@@ -16,7 +16,7 @@ class CategorieController extends Controller
             'name' => $validatedData['categ']
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Vous avez ajouter la categorie ' . $validatedData['categ'] . ' avec succès');
     }
 
 
@@ -29,7 +29,7 @@ class CategorieController extends Controller
             'name' => $validate['newcateg']
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Vous avez ajouter la categorie avec succès');
     }
 
 
@@ -38,6 +38,6 @@ class CategorieController extends Controller
         $categories = Categorie::findOrFail($id);
         $categories->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Vous avez ajouter la categorie avec succès');;
     }
 }

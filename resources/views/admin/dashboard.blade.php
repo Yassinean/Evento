@@ -126,6 +126,13 @@
                     <button type="button" data-modal-toggle="authentication-modal" class='bx bx-plus'></button>
                     <i class='bx bx-filter'></i>
                 </div>
+                @if (session('success'))
+                    <div class=" p-4 my-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                        role="alert" id="successMessage">
+                        <strong class="font-bold">Success!</strong>
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                    </div>
+                @endif
                 <table>
                     <thead>
                         <tr>

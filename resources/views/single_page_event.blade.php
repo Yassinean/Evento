@@ -72,8 +72,15 @@
             <p class="pb-6">{{ $events->description }}</p>
         </div>
     </div>
+    @if (session('success'))
+        <div class=" p-4 my-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+            role="alert" id="successMessage">
+            <strong class="font-bold">Success!</strong>
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
     {{-- @dd($events->id) --}}
-    <form method="post" action="{{ route('createreservation', $events->id) }}">
+    <form method="post" action="{{ route('createreservation', $events) }}">
         @csrf
         <input type="hidden" name="client_id" value="{{ Auth::user()->id }}">
         <input type="hidden" name="acceptation" value="{{ $events->acceptation }}">
@@ -83,10 +90,12 @@
             Reserver Maintenant
         </button>
     </form>
-    @if ($reservations)
+    @if ($result)
         <form action="{{ route('ticket', ['id' => $events->id]) }}" method="post">
             @csrf
-            <button>Get Ticket</button>
+            <div class="button">
+                <button type="submit" class="btn">Get Tickets<i class="lni lni-ticket"></i></button>
+            </div>
         </form>
     @endif
 </main>
