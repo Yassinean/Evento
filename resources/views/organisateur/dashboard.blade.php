@@ -180,21 +180,14 @@
             <li>
                 <i class='bx bxs-calendar-check'></i>
                 <span class="text">
-                    <h3></h3>
+                    <h3>{{ $eventCount }}</h3>
                     <p>Nombre d'événement</p>
-                </span>
-            </li>
-            <li>
-                <i class='bx bxs-group'></i>
-                <span class="text">
-                    <h3>1</h3>
-                    <p>Places disponibles</p>
                 </span>
             </li>
             <li>
                 <i class='bx bxs-dollar-circle'></i>
                 <span class="text">
-                    <h3> 1 </h3>
+                    {{-- <h3> {{ $categoriesCount }} </h3> --}}
                     <p>Nombre de categories</p>
                 </span>
             </li>
@@ -260,11 +253,10 @@
                                                         </svg>
                                                     </button>
                                                 </div>
-                                                <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                                                    action="{{ route('updateevent', $event->id) }}" method="POST"
+                                                <form action="{{ route('updateevent', $event->id) }}" method="POST"
                                                     enctype="multipart/form-data">
                                                     @csrf
-                                                    @method('PATCH')
+                                                    @method('PUT')
 
                                                     <h3 class="text-xl font-medium text-gray-900 dark:text-white">
                                                         Modifier cet événement
@@ -328,6 +320,34 @@
                                                                     {{ $categorie->name }}</option>
                                                             @endforeach
                                                         </select>
+                                                    </div>
+                                                    <div class="flex justify-evenly">
+                                                        <div class="flex items-center">
+                                                            <div
+                                                                class="bg-white dark:bg-gray-100 rounded-full w-4 h-4 flex flex-shrink-0 justify-center items-center relative">
+                                                                <input aria-labelledby="label1" checked type="radio"
+                                                                    name="nacceptation" value="manuel"
+                                                                    class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:outline-none border rounded-full border-gray-400 absolute cursor-pointer w-full h-full checked:border-none" />
+                                                                <div
+                                                                    class="check-icon hidden border-4 border-indigo-700 rounded-full w-full h-full z-1">
+                                                                </div>
+                                                            </div>
+                                                            <label id="label1"
+                                                                class="ml-2 text-sm leading-4 font-normal text-gray-800 dark:text-gray-100">Manuel</label>
+                                                        </div>
+                                                        <div class="flex items-center ml-6">
+                                                            <div
+                                                                class="bg-white dark:bg-gray-100 rounded-full w-4 h-4 flex flex-shrink-0 justify-center items-center relative">
+                                                                <input aria-labelledby="label2" type="radio"
+                                                                    name="nacceptation" value="automatique"
+                                                                    class="checkbox appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:outline-none border rounded-full border-gray-400 absolute cursor-pointer w-full h-full checked:border-none" />
+                                                                <div
+                                                                    class="check-icon hidden border-4 border-indigo-700 rounded-full w-full h-full z-1">
+                                                                </div>
+                                                            </div>
+                                                            <label id="label2"
+                                                                class="ml-2 text-sm leading-4 font-normal text-gray-800 dark:text-gray-100">Automatique</label>
+                                                        </div>
                                                     </div>
                                                     <button type="submit"
                                                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modifier</button>

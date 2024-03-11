@@ -46,12 +46,13 @@ Route::get('auth/google/callback', [SocialLoginController::class, 'callback'])->
 
 /**** organisateur routing ****/
 Route::middleware(['auth', 'CheckRole:organisateur'])->group(function () {
-    Route::get('/organisateur/gestion_ticket', [OrganisateurController::class, 'ticket'])->name('organisateur.gestion_ticket');
+    Route::get('/organisateur/gestion_ticket', [OrganisateurController::class, 'acceptation'])->name('organisateur.gestion_ticket');
+    Route::get('/organisateur/gestion_ticket', [OrganisateurController::class, 'acceptReservation'])->name('accept.ticket');
+    Route::get('/organisateur/gestion_ticket/{ticket}', [OrganisateurController::class, 'deleteReservation'])->name('delet.ticket');
     Route::get('/organisateur/dashboard', [EventController::class, 'index'])->name('organisateur.dashboard');
     Route::post('/organisateur/dashboard/createEvent', [EventController::class, 'store'])->name('createevent');
     Route::delete('/organisateur/dashboard/{id}', [EventController::class, 'destroy'])->name('deleteevent');
-    Route::patch('/organisateur/dashboard/{event}', [EventController::class, 'update'])->name('updateevent');
-});
+    Route::put('/organisateur/dashboard/{event}', [EventController::class, 'update'])->name('updateevent');});
 /**** end organisateur routing ****/
 /**** visiteur routing ****/
 Route::get('/', [VisiteurController::class, 'index'])->name('visiteur.home');

@@ -13,13 +13,14 @@ class EventController extends Controller
 {
     public function index()
     {
-
         $organizerQuery = Organisateur::where('user_id', Auth::id())->first();
         $organizerId = $organizerQuery ? $organizerQuery->id : null;
-        $evntcount = Event::withCount('reservation');
+        $eventCount = Event::where('organisateur_id', $organizerId)->with('organisateur')->count();
+        // $evntcount = Event::withCount('reservation');
         $events = Event::where('organisateur_id', $organizerId)->with('organisateur')->get();
         $categories = Categorie::all();
-        return view('organisateur.dashboard', compact('events', 'categories', 'organizerId', 'evntcount'));
+        // $categoriesCount = Event::where('categorie_id', $categories)->with('categories')->count();
+        return view('organisateur.dashboard', compact('events', 'categories', 'organizerId', 'eventCount'));
     }
 
     public function store(EventRequest $request)
@@ -39,24 +40,37 @@ class EventController extends Controller
         return redirect()->back();
     }
 
-    public function update(EventRequest $request, Event $id)
+    public function update(Request $request, Event $event)
     {
-        dd($request);
-        $validatedData = $request->validated();
-        $image = $request->file('nimage');
-        $imageName = time() . '.' . $image->extension();
-        $image->storeAs('public/images', $imageName);
-        $id->update([
-            'image' => $imageName,
-            'name' => $validatedData['name'],
-            'description' => $validatedData['description'],
-            'localisation' => $validatedData['localisation'],
-            'date' => $validatedData['date'],
-            'acceptation' => $validatedData['acceptation'],
-            'capacity' => $validatedData['capacity'],
-            'categorie_id' => $validatedData['categorie_id'],
+        $validatedData = $request->validate([
+            'nimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nname' => 'required|string|max:255',
+            'ndescription' => 'required|string',
+            'nlocalisation' => 'required|string',
+            'ndate' => 'required|date',
+            'ncapacity' => 'required|integer',
+            'ncategorie_id' => 'required|integer|exists:categories,id',
+            'nacceptation' => 'required', //is not in your form, ensure it's handled appropriately if needed.
         ]);
-        // dd($event);
+        if ($request->hasFile('nimage')) {
+            $image = $request->file('nimage');
+            $imageName = time() . '.' . $image->extension();
+            $image->storeAs('public/images', $imageName);
+
+            // Update the event with new image name.
+            $event->image = $imageName;
+        }
+
+        $event->image = $validatedData['nimagegit'];;
+        // dd($event->image);
+        $event->name = $validatedData['nname'];
+        $event->description = $validatedData['ndescription'];
+        $event->localisation = $validatedData['nlocalisation'];
+        $event->date = $validatedData['ndate'];
+        $event->capacity = $validatedData['ncapacity'];
+        $event->categorie_id = $validatedData['ncategorie_id'];
+
+        $event->save();
         return redirect()->back();
     }
 

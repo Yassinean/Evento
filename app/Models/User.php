@@ -44,15 +44,18 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function admin(){
+    public function admin()
+    {
         return $this->belongsTo(Admin::class);
     }
 
-    public function organisateur(){
+    public function organisateur()
+    {
         return $this->hasOne(Organisateur::class);
     }
-    
-    public function visiteur(){
-        return $this->hasOne(Organisateur::class);
+
+    public function visiteurs()
+    {
+        return $this->hasOne(Visiteur::class);
     }
 }

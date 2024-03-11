@@ -57,27 +57,50 @@
                     <thead>
                         <tr>
                             <th>Cients</th>
-                            <th>Action</th>
+                            <th>Evenements</th>
+                            <th>Date de réservation</th>
+                            <th class="flex justify-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                        {{-- @dd($events) --}}
                         @foreach ($reservations as $reservation)
                             <tr>
-                                <td>{{ $reservation->visiteurs->user->name }}</td>
+                                <td> {{-- $reservation->visiteurs->user->name --}}</td>
+                                <td> {{ $reservation->event->name }}</td>
+                                <td> {{ $reservation->created_at }}</td>
                                 <td>
-                                    {{-- <form action="{{ route('deleteevent', $event->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button
-                                            class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
-                                    </form> --}}
+                                    <div class="flex justify-center gap-2">
+                                        <form action="{{ route('accept.ticket', $reservation->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('put')
+                                            <button
+                                                class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                    class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="m4.5 12.75 6 6 9-13.5" />
+                                                </svg>
+
+                                            </button>
+                                        </form>
+                                        <form action="{{ route('delet.ticket', $reservation->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
