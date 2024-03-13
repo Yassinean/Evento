@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\Categorie;
+use App\Models\Reservation;
 use App\Models\Organisateur;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -12,18 +14,6 @@ use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
-    public function index()
-    {
-        $organizerQuery = Organisateur::where('user_id', Auth::id())->first();
-        $organizerId = $organizerQuery ? $organizerQuery->id : null;
-        $eventCount = Event::where('organisateur_id', $organizerId)->with('organisateur')->count();
-        // $evntcount = Event::withCount('reservation');
-        $events = Event::where('organisateur_id', $organizerId)->with('organisateur')->get();
-        $categories = Categorie::all();
-        // $categoriesCount = Event::where('categorie_id', $categories)->with('categories')->count();
-        return view('organisateur.dashboard', compact('events', 'categories', 'organizerId', 'eventCount'));
-    }
-
     public function store(EventRequest $request)
     {
 

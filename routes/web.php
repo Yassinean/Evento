@@ -49,7 +49,7 @@ Route::middleware(['auth', 'CheckRole:organisateur'])->group(function () {
     Route::get('/organisateur/gestion_ticket', [OrganisateurController::class, 'acceptation'])->name('organisateur.gestion_ticket');
     Route::put('/organisateur/gestion_ticket/accept/{id}', [OrganisateurController::class, 'acceptReservation'])->name('accept.ticket');
     Route::delete('/organisateur/gestion_ticket/refuse/{id}', [OrganisateurController::class, 'deleteReservation'])->name('delet.ticket');
-    Route::get('/organisateur/dashboard', [EventController::class, 'index'])->name('organisateur.dashboard');
+    Route::get('/organisateur/dashboard', [OrganisateurController::class, 'index'])->name('organisateur.dashboard');
     Route::post('/organisateur/dashboard/createEvent', [EventController::class, 'store'])->name('createevent');
     Route::delete('/organisateur/dashboard/{id}', [EventController::class, 'destroy'])->name('deleteevent');
     Route::put('/organisateur/dashboard/{event}', [EventController::class, 'update'])->name('updateevent');

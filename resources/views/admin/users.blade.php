@@ -71,28 +71,29 @@
                             </div>
                         @endif
                         @foreach ($users as $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->role }}</td>
-                                <td>
+                            @if($user->role !== 'admin')
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->role }}</td>
+                                    <td>
+                                        <form action="{{ route('users.update', $user->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            @if ($user->status == 'unblocked')
+                                                <input type="hidden" name="status" value="blocked">
+                                            @else
+                                                <input type="hidden" name="status" value="unblocked">
+                                            @endif
+                                            <button type="submit"
+                                                class="{{ $user->status == 'unblocked' ? 'bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 shadow-md py-2 px-6 inline-flex items-center' : 'bg-white text-gray-800 font-bold rounded border-b-2 border-yellow-500 hover:border-yellow-600 hover:bg-yellow-500 shadow-md py-2 px-6 inline-flex items-center' }}">
+                                                {{ $user->status == 'unblocked' ? 'Block' : 'Unblock' }}
+                                            </button>
+                                        </form>
 
-                                    <form action="{{ route('users.update', $user->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        @if ($user->status == 'unblocked')
-                                            <input type="hidden" name="status" value="blocked">
-                                        @else
-                                            <input type="hidden" name="status" value="unblocked">
-                                        @endif
-                                        <button type="submit"
-                                            class="{{ $user->status == 'unblocked' ? 'bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 shadow-md py-2 px-6 inline-flex items-center' : 'bg-white text-gray-800 font-bold rounded border-b-2 border-yellow-500 hover:border-yellow-600 hover:bg-yellow-500 shadow-md py-2 px-6 inline-flex items-center' }}">
-                                            {{ $user->status == 'unblocked' ? 'Block' : 'Unblock' }}
-                                        </button>
-                                    </form>
-
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

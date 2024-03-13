@@ -80,6 +80,7 @@
                                         <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                                             @if (Route::has('login'))
                                                 @auth
+                                                    {{-- @if (Auth::user()->status == 'blocked') --}}
                                                     @if (Auth::user()->role == 'admin')
                                                         <a href="{{ url('/admin/dashboard') }}"
                                                             class="font-semibold text-gray-600 hover:text-gray-900">Dashboard</a>
@@ -90,9 +91,10 @@
                                                         <!-- Logout Form -->
                                                         <form method="POST" action="{{ route('logout') }}">
                                                             @csrf
-                                                            <button type="submit" class="btn">Logout</button>
+                                                            <button type="submit" class="btn bg-white mt-4">Logout</button>
                                                         </form>
                                                     @endif
+                                                    {{-- @endif --}}
                                                 @else
                                                     @if (Route::has('register'))
                                                         <a href="{{ route('register') }}"
@@ -603,36 +605,28 @@
         });
     </script>
     <script>
-        const finaleDate = new Date("February 15, 2023 00:00:00").getTime();
+// Fonction pour mettre à jour le compte à rebours
+function updateTimer() {
+    var currentTime = new Date();
+    var targetDate = new Date("2024-03-14"); // Date cible pour le compte à rebours
+    
+    var difference = targetDate - currentTime;
+    
+    var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    
+    // Mettre à jour les éléments HTML
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+    document.getElementById("seconds").innerHTML = seconds;
+}
 
-        const timer = () => {
-            const now = new Date().getTime();
-            let diff = finaleDate - now;
-            if (diff < 0) {
-                document.querySelector('.alert').style.display = 'block';
-                document.querySelector('.container').style.display = 'none';
-            }
-
-            let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            let hours = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
-            let minutes = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
-            let seconds = Math.floor(diff % (1000 * 60) / 1000);
-
-            days <= 99 ? days = `0${days}` : days;
-            days <= 9 ? days = `00${days}` : days;
-            hours <= 9 ? hours = `0${hours}` : hours;
-            minutes <= 9 ? minutes = `0${minutes}` : minutes;
-            seconds <= 9 ? seconds = `0${seconds}` : seconds;
-
-            document.querySelector('#days').textContent = days;
-            document.querySelector('#hours').textContent = hours;
-            document.querySelector('#minutes').textContent = minutes;
-            document.querySelector('#seconds').textContent = seconds;
-
-        }
-        timer();
-        setInterval(timer, 1000);
-    </script>
+// Appeler la fonction updateTimer toutes les secondes
+setInterval(updateTimer, 1000);
+</script>
 </body>
 
 </html>

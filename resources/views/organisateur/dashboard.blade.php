@@ -173,7 +173,7 @@
             <li>
                 <i class='bx bxs-calendar-check'></i>
                 <span class="text">
-                    <h3>1020</h3>
+                    <h3>{{ $reservationsCount }}</h3>
                     <p>Nombre de réservation</p>
                 </span>
             </li>
@@ -187,8 +187,8 @@
             <li>
                 <i class='bx bxs-dollar-circle'></i>
                 <span class="text">
-                    {{-- <h3> {{ $categoriesCount }} </h3> --}}
-                    <p>Nombre de categories</p>
+                    {{-- <h3> {{ $CategorieCount }} </h3> --}}
+                    <p>Nombre de clients</p>
                 </span>
             </li>
         </ul>
@@ -211,14 +211,14 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Image</th>
-                            <th>Titre</th>
-                            <th>Description</th>
-                            <th>Localisation</th>
-                            <th>Date</th>
-                            <th>Capacité</th>
-                            <th>Categorie</th>
-                            <th>Action</th>
+                            <th class="text-center">Image</th>
+                            <th class="text-center">Titre</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Localisation</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Capacité</th>
+                            <th class="text-center">Categorie</th>
+                            <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -226,12 +226,12 @@
                         @foreach ($events as $event)
                             <tr>
                                 <td><img src="{{ asset('images/' . $event->image) }}" alt=""></td>
-                                <td>{{ $event->name }}</td>
-                                <td>{{ $event->description }}</td>
-                                <td>{{ $event->localisation }}</td>
-                                <td>{{ $event->date }}</td>
-                                <td>{{ $event->capacity }}</td>
-                                <td>{{ $event->categorie->name }}</td>
+                                <td class="text-center">{{ $event->name }}</td>
+                                <td class="text-center">{{ $event->description }}</td>
+                                <td class="text-center">{{ $event->localisation }}</td>
+                                <td class="text-center">{{ $event->date }}</td>
+                                <td class="text-center">{{ $event->capacity }}</td>
+                                <td class="text-center">{{ $event->categorie->name }}</td>
                                 <td>
                                     <button data-modal-toggle="authentication-modal-1{{ $event->id }}"
                                         type="button"

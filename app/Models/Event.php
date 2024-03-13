@@ -36,4 +36,8 @@ class Event extends Model
     {
         return $this->belongsTo(Organisateur::class);
     }
+
+    public static function youcode(){
+        
+    }
 }

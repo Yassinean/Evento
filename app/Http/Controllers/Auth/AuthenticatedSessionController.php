@@ -28,18 +28,18 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        if(Auth::user()->status === "blocked"){
+            Auth::logout();
+            abort(403);
+        }
         // dd(Auth::user()->role);
+                $userstatus = Auth::user()->status;
         if (Auth::user()->role === 'admin') {
             return redirect()->route('admin.dashboard');
         } elseif (Auth::user()->role === 'organisateur') {
-            if(Auth::user()->status === 'blocked'){
-                return abort(401);
-            }
             return redirect()->route('organisateur.dashboard');
         } elseif (Auth::user()->role === 'visiteur') {
-            if(Auth::user()->status === 'blocked'){
-                return abort(401);
-            }
+
             return redirect('/');
         }
         return redirect()->intended(RouteServiceProvider::HOME);

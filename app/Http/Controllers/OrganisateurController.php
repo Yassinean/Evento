@@ -2,16 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ReservationRequest;
-use Illuminate\Http\Request;
-use App\Models\Event;
-use App\Models\Organisateur;
-use App\Models\Reservation;
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Categorie;
+use App\Models\Reservation;
+use App\Models\Organisateur;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ReservationRequest;
 
 class OrganisateurController extends Controller
 {
+    public function index()
+    {
+        $organizerQuery = Organisateur::where('user_id', Auth::id())->first();
+        $organizerId = $organizerQuery ? $organizerQuery->id : null;
+        $eventCount = Event::where('organisateur_id', $organizerId)->with('organisateur')->count();
+
+        $events = Event::where('organisateur_id', $organizerId)->pluck('id');
+        $reservationsCount = Reservation::whereIn('event_id', $events)->count();
+
+        $events = Event::where('organisateur_id', $organizerId)->with('organisateur')->get();
+        $categories = Categorie::all();
+        // $categoriesCount = Event::where('categorie_id', $categories)->with('categories')->count();
+        return view('organisateur.dashboard', compact('events', 'categories', 'organizerId', 'eventCount', 'reservationsCount'));
+    }
+
     public function acceptation(Request $request)
     {
         $user_id = Auth::id();
@@ -33,7 +49,7 @@ class OrganisateurController extends Controller
                 $event->capacity--;
                 $event->save();
                 return redirect()->back()->with('success', 'Vous avez accepter la reservation avec succès ');
-            }else{
+            } else {
                 return redirect()->back()->with('success', 'Tous les places sont reservées ');
             }
         }

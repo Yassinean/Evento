@@ -55,7 +55,7 @@
                     </svg>
 
 
-                    <p class="pb-6">{{ $events->date }}</p>
+                    <p class="pb-6" id="date" data-date="{{ $events->date }}">{{ $events->date }}</p>
                 </div>
             </div>
         </div>
@@ -86,14 +86,14 @@
         <input type="hidden" name="acceptation" value="{{ $events->acceptation }}">
         <input type="hidden" name="event_id" value="{{ $events->id }}">
         <button type="submit"
-            class='flex justify-center max-w-sm w-full bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-2xl uppercase font-bold shadow-md rounded-full mx-auto p-5'>
+            class='flex justify-center max-w-sm w-full bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-2xl uppercase font-bold shadow-md rounded-full mx-auto p-2'>
             Reserver Maintenant
         </button>
     </form>
     @if ($result)
         <form action="{{ route('ticket', ['id' => $events->id]) }}" method="post">
             @csrf
-            <div class="button">
+            <div class="button flex justify-center m-2">
                 <button type="submit" class="btn">Get Tickets<i class="lni lni-ticket"></i></button>
             </div>
         </form>
