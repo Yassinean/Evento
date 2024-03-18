@@ -22,11 +22,11 @@ class AdminController extends Controller
         $organisateurCount = Organisateur::count();
         $categoriecount = Categorie::count();
         $categories = Cache::remember('categories', now()->addHours(24), function () {
-            return Categorie::paginate(5);
+            return Categorie::simplePaginate(5);
         });
         Cache::forget('categories');
         $eventCount = Event::count();
-        $events = Event::paginate(10);
+        $events = Event::simplePaginate(10);
         return view('admin.dashboard', compact('categories', 'visiteurCount', 'categoriecount', 'events', 'organisateurCount', 'eventCount'));
     }
 
